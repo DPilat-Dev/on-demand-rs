@@ -10,6 +10,11 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-primary: #2563eb;
+  --color-primary-dark: #1d4ed8;
+  --radius-lg: 0.75rem;
+  --radius-md: 0.5rem;
+  --radius-sm: 0.25rem;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -20,7 +25,222 @@
 }
 
 body {
-  background: var(--background);
+  background: white;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  margin: 0;
+  padding: 0;
 }
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* FAQ Section Animations */
+.faq-answer {
+  transition: max-height 0.3s ease-out;
+}
+
+.faq-question.active {
+  background-color: #f9fafb;
+}
+
+/* Smooth hover effects */
+.faq-item {
+  transition: box-shadow 0.2s ease;
+}
+
+.faq-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Smooth transitions */
+* {
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Brands carousel animation */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 30s linear infinite;
+}
+
+.animate-scroll:hover {
+  animation-play-state: paused;
+}
+
+/* Brand Carousel Component Styles */
+.brands-carousel-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.brands-carousel {
+  width: 100%;
+  overflow: hidden;
+}
+
+.brands-track {
+  display: flex;
+  animation: scroll 40s linear infinite;
+  gap: 10px;
+  width: max-content;
+}
+
+.brands-track:hover {
+  animation-play-state: paused;
+}
+
+.brand-item {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.5rem;
+  height: 80px;
+  background-color: white;
+  border-radius: 12px;
+  border: 2px solid #f1f5f9;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.brand-logo {
+  object-fit: contain;
+  filter: grayscale(100);
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+.brand-logo:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.05); 
+}
+
+
+/* Google Maps Location Styles */
+.location-map .map-container {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.location-map iframe {
+  display: block;
+}
+
+.location-map .map-overlay {
+  pointer-events: none;
+}
+
+.location-map .map-info {
+  padding: 12px 16px;
+}
+
+/**
+ 
+ .brand-logos-section {
+    padding: 2rem 2rem 3rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+  }
+
+  .brands-carousel-container {
+    width: 100%;
+  }
+
+  .brands-carousel {
+    position: relative;
+    overflow: hidden;
+    display: block;
+  }
+
+  .brands-track {
+    display: flex;
+    animation: scroll 30s linear infinite;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .brands-track:hover {
+    animation-play-state: paused;
+  }
+
+  .brand-item {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 40px;
+    min-width: 200px;
+    height: 70px;
+    background-color: white;
+    border-radius: 12px;
+    border: 2px solid #f1f5f9;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .brand-item:hover {
+    box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.15);
+    border-color: #3b82f6;
+  }
+
+  .brand-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .brand-item:hover::before {
+    left: 100%;
+  }
+
+  .brand-logo {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    filter: grayscale(100%);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+  }
+
+  .brand-item:hover .brand-logo {
+    filter: grayscale(0%);
+    transform: scale(1.05);
+  }*/

@@ -1,6 +1,6 @@
 import { homePageData } from '@/data/homepage';
 import { Phone, Mail, MapPin } from 'lucide-react';
-import { FaClock } from 'react-icons/fa';
+import DynamicIcon from './DynamicIcon';
 
 export default function ContactCTA() {
   const { contact, emergencyCTA } = homePageData;
@@ -48,7 +48,7 @@ export default function ContactCTA() {
               </div>
 
                <div className="flex items-start space-x-4">
-                 <FaClock className="h-6 w-6 text-blue-600 mt-1" />
+                  <DynamicIcon iconName="FaClock" size={24} color="#3b82f6" className="mt-1" />
                  <div>
                    <h4 className="font-semibold text-gray-900">Hours</h4>
                    <p className="text-gray-600">{contact.contactInfo.hours}</p>

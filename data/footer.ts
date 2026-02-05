@@ -48,17 +48,20 @@ export const footerData: FooterData = {
     {
       platform: "facebook",
       href: "https://facebook.com/ondemandrs",
-      icon: "📘"
+      icon: "FaFacebook",
+      iconColor: "white"
     },
     {
       platform: "google",
       href: "https://www.google.com/search?q=OnDemand+Restaurant+Service+reviews",
-      icon: "🌐"
+      icon: "FaGoogle",
+      iconColor: "white"
     },
     {
       platform: "linkedin",
       href: "https://linkedin.com/company/ondemand-restaurant-service",
-      icon: "💼"
+      icon: "FaLinkedin",
+      iconColor: "white"
     }
   ],
   

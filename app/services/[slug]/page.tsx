@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
 import React from 'react';
-import { FaWrench } from 'react-icons/fa';
+import DynamicIcon from '@/app/components/DynamicIcon';
 
 // Import all service data
 import { commercialRefrigerationData } from '@/data/services/commercial-refrigeration';
@@ -229,7 +229,7 @@ export default function ServicePage({ params }: PageProps) {
                    Our certified technicians can diagnose and fix any {safeServiceData.name.toLowerCase()} issue quickly and efficiently.
                  </p>
                  <a href="tel:405-242-6028" className="faq-cta-button inline-flex items-center justify-center rounded-lg bg-blue-600 px-8 py-4 text-white font-semibold hover:bg-blue-700 transition-colors">
-                    <FaWrench className="mr-2" />
+                     <DynamicIcon iconName="FaWrench" size={20} color="white" className="mr-2" />
                     Schedule Service Call
                  </a>
                </div>
@@ -319,7 +319,7 @@ export default function ServicePage({ params }: PageProps) {
                 Don&apos;t see your brand? We service most commercial equipment manufacturers and can work on older or specialty models.
               </p>
               <a href="tel:405-242-6028" className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-6 py-3 text-white font-semibold hover:bg-blue-700 transition-colors">
-                 <FaWrench className="mr-2" />
+                  <DynamicIcon iconName="FaWrench" size={20} color="white" className="mr-2" />
                  Ask About Your Brand
               </a>
             </div>

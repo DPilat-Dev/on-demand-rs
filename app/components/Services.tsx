@@ -2,14 +2,7 @@ import { homePageData } from '@/data/homepage';
 import Link from 'next/link';
 import { CheckCircle } from 'lucide-react';
 import Image from 'next/image';
-import { 
-  FaSnowflake, 
-  FaUtensils, 
-  FaThermometerHalf, 
-  FaCube, 
-  FaWrench,
-  FaPhone
-} from 'react-icons/fa';
+import DynamicIcon from './DynamicIcon';
 
 // Import service data for images
 import { commercialRefrigerationData } from '@/data/services/commercial-refrigeration';
@@ -30,15 +23,15 @@ export default function Services() {
     'preventive-maintenance': preventiveMaintenanceData.heroImage
   };
 
-  const getIcon = (iconName: string) => {
+  const getIcon = (iconName: string, iconColor?: string) => {
     const icons: Record<string, React.ReactNode> = {
-      'refrigeration': <FaSnowflake className="text-2xl text-blue-600" />,
-      'food-service': <FaUtensils className="text-2xl text-orange-600" />,
-      'hvac': <FaThermometerHalf className="text-2xl text-red-600" />,
-      'ice-machine': <FaCube className="text-2xl text-cyan-600" />,
-      'maintenance': <FaWrench className="text-2xl text-gray-700" />
+      'refrigeration': <DynamicIcon iconName="FaSnowflake" size={24} color={iconColor} />,
+      'food-service': <DynamicIcon iconName="FaUtensils" size={24} color={iconColor} />,
+      'hvac': <DynamicIcon iconName="FaThermometerHalf" size={24} color={iconColor} />,
+      'ice-machine': <DynamicIcon iconName="FaCube" size={24} color={iconColor} />,
+      'maintenance': <DynamicIcon iconName="FaWrench" size={24} color={iconColor} />
     };
-    return icons[iconName] || <FaWrench className="text-2xl text-gray-700" />;
+    return icons[iconName] || <DynamicIcon iconName="FaWrench" size={24} color={iconColor} />;
   };
 
   return (
@@ -78,9 +71,9 @@ export default function Services() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                      <div className="absolute top-4 left-4">
-                       <div className="h-12 w-12 rounded-lg bg-white/90 backdrop-blur-sm flex items-center justify-center">
-                         {getIcon(service.icon)}
-                       </div>
+                        <div className="h-12 w-12 rounded-lg bg-white/90 backdrop-blur-sm flex items-center justify-center">
+                          {getIcon(service.icon, service.iconColor)}
+                        </div>
                      </div>
                   </div>
                 )}
@@ -129,7 +122,7 @@ export default function Services() {
                href="tel:405-242-6028"
                className="inline-flex items-center justify-center rounded-lg bg-white px-6 py-3 text-blue-600 font-semibold hover:bg-gray-100 transition-colors"
              >
-               <FaPhone className="mr-2" />
+                <DynamicIcon iconName="FaPhone" size={20} color="#3b82f6" className="mr-2" />
                Call Now: 405-242-6028
              </a>
             <Link

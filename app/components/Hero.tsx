@@ -2,7 +2,7 @@ import { homePageData } from '@/data/homepage';
 import { Phone, Clock } from 'lucide-react';
 import Image from 'next/image';
 import { BrandCarousel } from './BrandCarousel';
-import { FaMapMarkerAlt } from 'react-icons/fa';
+import DynamicIcon from './DynamicIcon';
 
 export default function Hero() {
   const { hero } = homePageData;
@@ -16,7 +16,7 @@ export default function Hero() {
           <div className="max-w-3xl lg:flex-1">
              {/* Badge */}
              <div className="inline-flex items-center rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold mb-6">
-               <FaMapMarkerAlt className="mr-2" />
+                <DynamicIcon iconName="FaMapMarkerAlt" size={16} color="white" className="mr-2" />
                {hero.badge}
              </div>
 

@@ -12,6 +12,7 @@ export interface SocialMediaLink {
   platform: string;
   href: string;
   icon: string;
+  iconColor?: string;
 }
 
 export interface Certification {

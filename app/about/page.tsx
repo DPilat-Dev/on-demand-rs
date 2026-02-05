@@ -1,7 +1,7 @@
 import { Shield, Clock, Users, Award, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FaPhone } from 'react-icons/fa';
+import DynamicIcon from '@/app/components/DynamicIcon';
 
 export default function AboutPage() {
   const features = [
@@ -55,7 +55,7 @@ export default function AboutPage() {
                   href="tel:405-242-6028"
                   className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-6 py-3 text-white font-semibold hover:bg-blue-700 transition-colors"
                 >
-                   <FaPhone className="mr-2" /> Call Now: 405-242-6028
+                    <DynamicIcon iconName="FaPhone" size={20} color="white" className="mr-2" /> Call Now: 405-242-6028
                 </a>
                 <Link
                   href="/contact"
@@ -198,7 +198,7 @@ export default function AboutPage() {
               href="tel:405-242-6028"
               className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-8 py-4 text-white font-bold hover:bg-blue-700 transition-colors text-lg"
             >
-               <FaPhone className="mr-2" /> Call Now: 405-242-6028
+                <DynamicIcon iconName="FaPhone" size={20} color="white" className="mr-2" /> Call Now: 405-242-6028
             </a>
             <Link
               href="/contact"

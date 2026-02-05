@@ -27,12 +27,14 @@ export interface ServiceCard {
   title: string;
   description: string;
   icon: string;
+  iconColor?: string;
   features: string[];
   link: string;
 }
 
 export interface DeliveryCard {
   icon: string;
+  iconColor?: string;
   title: string;
   description: string;
   statHighlight: StatHighlight;
@@ -40,6 +42,7 @@ export interface DeliveryCard {
 
 export interface FeatureItem {
   icon: string;
+  iconColor?: string;
   title: string;
   description: string;
 }
@@ -263,10 +266,11 @@ export const homePageData: HomePageData = {
     title: "Our Expertise",
     subtitle: "Comprehensive commercial kitchen equipment services across Oklahoma",
     serviceCards: [
-      {
+       {
         title: "Commercial Refrigeration",
         description: "Walk-in coolers, reach-in refrigerators, freezers, and display cases",
         icon: "refrigeration",
+        iconColor: "#3b82f6", // blue-600
         features: [
           "Emergency repairs",
           "Preventive maintenance",
@@ -274,10 +278,11 @@ export const homePageData: HomePageData = {
         ],
         link: "/services/commercial-refrigeration"
       },
-      {
+       {
         title: "Food Service Equipment",
         description: "Ovens, fryers, grills, steamers, and warming equipment",
         icon: "food-service",
+        iconColor: "#ea580c", // orange-600
         features: [
           "All major brands",
           "Parts replacement",
@@ -285,10 +290,11 @@ export const homePageData: HomePageData = {
         ],
         link: "/services/food-service-equipment"
       },
-      {
+       {
         title: "Commercial HVAC",
         description: "Kitchen ventilation, exhaust systems, and climate control",
         icon: "hvac",
+        iconColor: "#dc2626", // red-600
         features: [
           "Hood cleaning",
           "Ductwork repair",
@@ -296,10 +302,11 @@ export const homePageData: HomePageData = {
         ],
         link: "/services/commercial-hvac"
       },
-      {
+       {
         title: "Ice Machines",
         description: "Commercial ice makers, dispensers, and storage solutions",
         icon: "ice-machine",
+        iconColor: "#0891b2", // cyan-600
         features: [
           "Cleaning & sanitizing",
           "Filter replacements",
@@ -307,10 +314,11 @@ export const homePageData: HomePageData = {
         ],
         link: "/services/ice-machines"
       },
-      {
+       {
         title: "Preventive Maintenance",
         description: "Regular maintenance programs to prevent equipment failures",
         icon: "maintenance",
+        iconColor: "#374151", // gray-700
         features: [
           "Scheduled inspections",
           "Performance tuning",

@@ -1,16 +1,16 @@
 import { homePageData } from '@/data/homepage';
 import { Star } from 'lucide-react';
-import { FaGoogle, FaYelp, FaFacebook, FaStar } from 'react-icons/fa';
+import DynamicIcon from './DynamicIcon';
 
 export default function Testimonials() {
   const { testimonials } = homePageData;
 
   const getPlatformIcon = (type: string) => {
     switch (type) {
-      case 'google': return <FaGoogle className="text-blue-600 inline mr-1" />;
-      case 'yelp': return <FaYelp className="text-red-600 inline mr-1" />;
-      case 'facebook': return <FaFacebook className="text-blue-600 inline mr-1" />;
-      default: return <FaStar className="text-yellow-500 inline mr-1" />;
+      case 'google': return <DynamicIcon iconName="FaGoogle" size={16} color="#3b82f6" className="inline mr-1" />;
+      case 'yelp': return <DynamicIcon iconName="FaYelp" size={16} color="#dc2626" className="inline mr-1" />;
+      case 'facebook': return <DynamicIcon iconName="FaFacebook" size={16} color="#3b82f6" className="inline mr-1" />;
+      default: return <DynamicIcon iconName="FaStar" size={16} color="#eab308" className="inline mr-1" />;
     }
   };
 
@@ -82,7 +82,7 @@ export default function Testimonials() {
              rel="noopener noreferrer"
              className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-6 py-3 text-white font-semibold hover:bg-blue-700 transition-colors"
            >
-             <FaStar className="mr-2" />
+              <DynamicIcon iconName="FaStar" size={20} color="#eab308" className="mr-2" />
              {testimonials.googleCTA.buttonText}
            </a>
         </div>

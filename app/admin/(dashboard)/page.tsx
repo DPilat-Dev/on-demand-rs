@@ -1,6 +1,8 @@
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 
+type SubmissionRow = Awaited<ReturnType<typeof prisma.contactSubmission.findMany>>[number];
+
 async function getStats() {
   try {
     const [totalSubmissions, unreadSubmissions, totalServices, enabledServices] = await Promise.all([
@@ -77,7 +79,7 @@ export default async function AdminDashboard() {
           <p className="px-6 py-8 text-sm text-gray-500 text-center">No submissions yet.</p>
         ) : (
           <div className="divide-y divide-gray-100">
-            {stats.recentSubmissions.map((sub) => (
+            {stats.recentSubmissions.map((sub: SubmissionRow) => (
               <Link
                 key={sub.id}
                 href={`/admin/inbox/${sub.id}`}

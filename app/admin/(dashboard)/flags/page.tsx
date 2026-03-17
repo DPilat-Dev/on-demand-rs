@@ -1,6 +1,8 @@
 import { prisma } from '@/lib/prisma';
 import FlagToggle from './FlagToggle';
 
+type FeatureFlagRow = Awaited<ReturnType<typeof prisma.featureFlag.findMany>>[number];
+
 export default async function FlagsPage() {
   const flags = await prisma.featureFlag.findMany({ orderBy: { key: 'asc' } });
 
@@ -24,7 +26,7 @@ export default async function FlagsPage() {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
-            {flags.map((flag) => (
+            {flags.map((flag: FeatureFlagRow) => (
               <tr key={flag.key} className="hover:bg-gray-50 transition-colors">
                 <td className="px-6 py-4 font-medium text-gray-900">{flag.label}</td>
                 <td className="px-6 py-4 hidden md:table-cell">

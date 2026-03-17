@@ -3,9 +3,11 @@ import Link from 'next/link';
 import ServiceToggle from './ServiceToggle';
 import NewServiceForm from './NewServiceForm';
 
+type ServicePageRow = Awaited<ReturnType<typeof prisma.servicePage.findMany>>[number];
+
 export default async function ServicesAdminPage() {
   const services = await prisma.servicePage.findMany({ orderBy: { sortOrder: 'asc' } });
-  const enabledCount = services.filter((s) => s.isEnabled).length;
+  const enabledCount = services.filter((s: ServicePageRow) => s.isEnabled).length;
 
   return (
     <div className="space-y-6">
@@ -33,7 +35,7 @@ export default async function ServicesAdminPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
-              {services.map((service) => (
+              {services.map((service: ServicePageRow) => (
                 <tr key={service.id} className="hover:bg-gray-50 transition-colors">
                   <td className="px-6 py-4">
                     <span className="font-medium text-gray-900">{service.name}</span>

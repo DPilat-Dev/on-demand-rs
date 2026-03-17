@@ -19,7 +19,7 @@ export async function POST(req: Request) {
   }
 
   const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '-').toLowerCase();
-  const blob = await put(`media/${safeName}`, file, {
+  const blob = await put(`content/${safeName}`, file, {
     access: 'public',
     addRandomSuffix: true,
   });

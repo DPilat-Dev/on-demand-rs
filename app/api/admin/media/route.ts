@@ -6,7 +6,7 @@ export async function GET() {
   const session = await auth();
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const { blobs } = await list({ prefix: 'media/' });
+  const { blobs } = await list();
   return NextResponse.json({ blobs });
 }
 

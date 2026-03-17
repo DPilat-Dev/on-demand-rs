@@ -95,7 +95,10 @@ function HomepageForm({ data, save }: { data: any; save: (fd: FormData) => Promi
           <Field label="Emergency Text" name="heroEmergencyText" defaultValue={data.hero?.emergency?.text ?? ''} />
         </div>
         <ImageField label="Background Image" name="heroBackgroundImage" defaultValue={data.hero?.backgroundImage ?? ''} hint="Upload via Media Library or paste a URL" />
+        <Field label="Background Image Alt Text" name="heroBackgroundImageAlt" defaultValue={data.hero?.backgroundImageAlt ?? ''} />
         <Field label="Button Text" name="heroButtonText" defaultValue={data.hero?.form?.buttonText ?? ''} />
+        <ImageField label="Certification Logo" name="heroCertificationImage" defaultValue={data.hero?.certification?.image ?? ''} hint="e.g. /content/cfesa-logo.png" />
+        <Field label="Certification Alt Text" name="heroCertificationAlt" defaultValue={data.hero?.certification?.alt ?? ''} />
       </SectionCard>
 
       <SectionCard title="Why Choose Section">
@@ -163,6 +166,44 @@ function HomepageForm({ data, save }: { data: any; save: (fd: FormData) => Promi
           <Field label="Phone" name="emergencyCtaPhone" defaultValue={data.emergencyCTA?.phone ?? ''} />
           <Field label="Note" name="emergencyCtaNote" defaultValue={data.emergencyCTA?.note ?? ''} />
         </div>
+      </SectionCard>
+
+      <SectionCard title="Services Section">
+        <Field label="Title" name="servicesTitle" defaultValue={data.services?.title ?? ''} />
+        <Field label="Subtitle" name="servicesSubtitle" defaultValue={data.services?.subtitle ?? ''} />
+        <p className="text-xs text-gray-500 mb-2">
+          JSON array of <code className="bg-gray-100 px-1 rounded">{'{ title, description, icon, iconColor, features, link }'}</code>
+        </p>
+        <TextareaField
+          label=""
+          name="servicesServiceCards"
+          defaultValue={JSON.stringify(data.services?.serviceCards ?? [], null, 2)}
+          rows={30}
+          mono
+        />
+      </SectionCard>
+
+      <SectionCard title="Contact Section">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Field label="Title" name="contactTitle" defaultValue={data.contact?.title ?? ''} />
+          <Field label="Subtitle" name="contactSubtitle" defaultValue={data.contact?.subtitle ?? ''} />
+          <Field label="Phone" name="contactPhone" defaultValue={data.contact?.contactInfo?.phone ?? ''} />
+          <Field label="Email" name="contactEmail" defaultValue={data.contact?.contactInfo?.email ?? ''} />
+          <Field label="Hours" name="contactHours" defaultValue={data.contact?.contactInfo?.hours ?? ''} />
+        </div>
+        <Field label="Address" name="contactAddress" defaultValue={data.contact?.contactInfo?.address ?? ''} />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Field label="Map Embed URL" name="contactMapEmbedUrl" defaultValue={data.contact?.map?.embedUrl ?? ''} />
+          <Field label="Directions URL" name="contactMapDirectionsUrl" defaultValue={data.contact?.map?.directionsUrl ?? ''} />
+        </div>
+        <p className="text-xs text-gray-500 mb-2">Contact Form config (JSON)</p>
+        <TextareaField
+          label=""
+          name="contactForm"
+          defaultValue={JSON.stringify(data.contact?.form ?? {}, null, 2)}
+          rows={16}
+          mono
+        />
       </SectionCard>
 
       <SaveBar href="/admin/content" />

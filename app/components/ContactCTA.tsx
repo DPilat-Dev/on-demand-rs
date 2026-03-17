@@ -1,9 +1,8 @@
-import { homePageData } from '@/data/homepage';
 import { Phone, Mail, MapPin } from 'lucide-react';
 import DynamicIcon from './DynamicIcon';
+import type { HomePageData } from '@/data/homepage';
 
-export default function ContactCTA() {
-  const { contact, emergencyCTA } = homePageData;
+export default function ContactCTA({ contact, emergencyCTA }: { contact: HomePageData['contact']; emergencyCTA: HomePageData['emergencyCTA'] }) {
 
   return (
     <section className="py-16 bg-white">

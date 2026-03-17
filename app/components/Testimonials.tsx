@@ -1,9 +1,8 @@
-import { homePageData } from '@/data/homepage';
 import { Star } from 'lucide-react';
 import DynamicIcon from './DynamicIcon';
+import type { HomePageData } from '@/data/homepage';
 
-export default function Testimonials() {
-  const { testimonials } = homePageData;
+export default function Testimonials({ testimonials }: { testimonials: HomePageData['testimonials'] }) {
 
   const getPlatformIcon = (type: string) => {
     switch (type) {

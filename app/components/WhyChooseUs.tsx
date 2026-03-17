@@ -1,7 +1,6 @@
-import { homePageData } from '@/data/homepage';
+import type { HomePageData } from '@/data/homepage';
 
-export default function WhyChooseUs() {
-  const { whyChooseUs } = homePageData;
+export default function WhyChooseUs({ whyChooseUs }: { whyChooseUs: HomePageData['whyChooseUs'] }) {
 
   return (
     <section className="py-16 bg-gradient-to-b from-white to-gray-50">

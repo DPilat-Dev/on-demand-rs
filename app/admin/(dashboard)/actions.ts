@@ -152,8 +152,13 @@ function buildHomepageContent(fd: FormData) {
       title: fd.get('heroTitle'),
       subtitle: fd.get('heroSubtitle'),
       backgroundImage: fd.get('heroBackgroundImage'),
+      backgroundImageAlt: fd.get('heroBackgroundImageAlt'),
       form: { buttonText: fd.get('heroButtonText'), emailPlaceholder: 'Email' },
       emergency: { phone: fd.get('heroPhone'), text: fd.get('heroEmergencyText') },
+      certification: {
+        image: fd.get('heroCertificationImage'),
+        alt: fd.get('heroCertificationAlt'),
+      },
     },
     whyChoose: {
       title: fd.get('whyChooseTitle'),
@@ -186,6 +191,26 @@ function buildHomepageContent(fd: FormData) {
       description: fd.get('emergencyCtaDescription'),
       phone: fd.get('emergencyCtaPhone'),
       note: fd.get('emergencyCtaNote'),
+    },
+    services: {
+      title: fd.get('servicesTitle'),
+      subtitle: fd.get('servicesSubtitle'),
+      serviceCards: tryJson(fd.get('servicesServiceCards') as string),
+    },
+    contact: {
+      title: fd.get('contactTitle'),
+      subtitle: fd.get('contactSubtitle'),
+      contactInfo: {
+        phone: fd.get('contactPhone'),
+        email: fd.get('contactEmail'),
+        address: fd.get('contactAddress'),
+        hours: fd.get('contactHours'),
+      },
+      map: {
+        embedUrl: fd.get('contactMapEmbedUrl'),
+        directionsUrl: fd.get('contactMapDirectionsUrl'),
+      },
+      form: tryJson(fd.get('contactForm') as string, null),
     },
   };
 }

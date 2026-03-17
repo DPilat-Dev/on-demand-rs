@@ -1,39 +1,31 @@
 import Link from 'next/link';
-import { homePageData } from '@/data/homepage';
 import { CheckCircle } from 'lucide-react';
 import Image from 'next/image';
 import DynamicIcon from '@/app/components/DynamicIcon';
+import { getPageContent, getAllServices } from '@/lib/content';
+import type { HomePageData } from '@/data/homepage';
 
-// Import service data for images
-import { commercialRefrigerationData } from '@/data/services/commercial-refrigeration';
-import { commercialHVACData } from '@/data/services/commercial-hvac';
-import { foodServiceEquipmentData } from '@/data/services/food-service-equipment';
-import { iceMachinesData } from '@/data/services/ice-machines';
-import { preventiveMaintenanceData } from '@/data/services/preventive-maintenance';
+export default async function ServicesPage() {
+  const [homepageData, allServices] = await Promise.all([
+    getPageContent('homepage') as Promise<HomePageData>,
+    getAllServices(),
+  ]);
 
-export default function ServicesPage() {
-  const { services } = homePageData;
+  const { services } = homepageData;
 
-  // Mapping service slugs to their hero images
-  const serviceImageMap: Record<string, string> = {
-    'commercial-refrigeration': commercialRefrigerationData.heroImage,
-    'food-service-equipment': foodServiceEquipmentData.heroImage,
-    'commercial-hvac': commercialHVACData.heroImage,
-    'ice-machines': iceMachinesData.heroImage,
-    'preventive-maintenance': preventiveMaintenanceData.heroImage
-  };
+  const serviceImageMap: Record<string, string> = Object.fromEntries(
+    allServices.map((s) => [s.slug, s.heroImage ?? ''])
+  );
 
   const getIcon = (iconName: string) => {
-    // Get the service data to access iconColor
-    const service = homePageData.services.serviceCards.find(card => card.icon === iconName);
+    const service = services.serviceCards.find((card) => card.icon === iconName);
     const iconColor = service?.iconColor;
-    
     const icons: Record<string, React.ReactNode> = {
-      'refrigeration': <DynamicIcon iconName="FaSnowflake" size={24} color={iconColor} />,
+      refrigeration: <DynamicIcon iconName="FaSnowflake" size={24} color={iconColor} />,
       'food-service': <DynamicIcon iconName="FaUtensils" size={24} color={iconColor} />,
-      'hvac': <DynamicIcon iconName="FaThermometerHalf" size={24} color={iconColor} />,
+      hvac: <DynamicIcon iconName="FaThermometerHalf" size={24} color={iconColor} />,
       'ice-machine': <DynamicIcon iconName="FaCube" size={24} color={iconColor} />,
-      'maintenance': <DynamicIcon iconName="FaWrench" size={24} color={iconColor} />
+      maintenance: <DynamicIcon iconName="FaWrench" size={24} color={iconColor} />,
     };
     return icons[iconName] || <DynamicIcon iconName="FaWrench" size={24} color={iconColor} />;
   };
@@ -44,13 +36,12 @@ export default function ServicesPage() {
       <section className="bg-gradient-to-br from-blue-900 to-gray-900 text-white">
         <div className="container mx-auto px-4 py-24 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-12 items-center">
-            {/* Left Content */}
             <div className="max-w-3xl lg:flex-1">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
                 Our Professional Services
               </h1>
               <p className="text-xl text-gray-300 mb-8">
-                Comprehensive commercial kitchen equipment services across Oklahoma. 
+                Comprehensive commercial kitchen equipment services across Oklahoma.
                 Licensed technicians with 45+ years combined experience.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
@@ -58,7 +49,7 @@ export default function ServicesPage() {
                   href="tel:405-242-6028"
                   className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-6 py-3 text-white font-semibold hover:bg-blue-700 transition-colors"
                 >
-                    <DynamicIcon iconName="FaPhone" size={20} color="white" className="mr-2" /> Call Now: 405-242-6028
+                  <DynamicIcon iconName="FaPhone" size={20} color="white" className="mr-2" /> Call Now: 405-242-6028
                 </a>
                 <Link
                   href="/contact"
@@ -68,8 +59,6 @@ export default function ServicesPage() {
                 </Link>
               </div>
             </div>
-
-            {/* Right Image Section */}
             <div className="lg:w-1/2 lg:max-w-xl">
               <div className="relative rounded-2xl overflow-hidden shadow-2xl">
                 <Image
@@ -97,26 +86,19 @@ export default function ServicesPage() {
       <section className="py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              {services.title}
-            </h2>
-            <p className="text-lg text-gray-600">
-              {services.subtitle}
-            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{services.title}</h2>
+            <p className="text-lg text-gray-600">{services.subtitle}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.serviceCards.map((service, index) => {
-              // Extract slug from link
               const slug = service.link.replace('/services/', '');
               const serviceImage = serviceImageMap[slug];
-              
               return (
                 <div
                   key={index}
                   className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all hover:-translate-y-1 flex flex-col"
                 >
-                  {/* Service Image */}
                   {serviceImage && (
                     <div className="relative h-48 w-full overflow-hidden">
                       <Image
@@ -129,22 +111,14 @@ export default function ServicesPage() {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                       <div className="absolute top-4 left-4">
                         <div className="h-12 w-12 rounded-lg bg-white/90 backdrop-blur-sm flex items-center justify-center">
-                           {getIcon(service.icon)}
+                          {getIcon(service.icon)}
                         </div>
                       </div>
                     </div>
                   )}
-
                   <div className="p-6 flex-1 flex flex-col">
-                    {/* Title & Description */}
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">
-                      {service.title}
-                    </h3>
-                    <p className="text-gray-600 mb-4">
-                      {service.description}
-                    </p>
-
-                    {/* Features */}
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">{service.title}</h3>
+                    <p className="text-gray-600 mb-4">{service.description}</p>
                     <ul className="space-y-2 mb-6 flex-1">
                       {service.features.map((feature, idx) => (
                         <li key={idx} className="flex items-start">
@@ -153,8 +127,6 @@ export default function ServicesPage() {
                         </li>
                       ))}
                     </ul>
-
-                    {/* CTA Button */}
                     <Link
                       href={service.link}
                       className="inline-flex items-center justify-center w-full rounded-lg bg-blue-600 px-4 py-3 text-sm font-semibold text-white hover:bg-blue-700 transition-colors mt-auto"
@@ -175,9 +147,7 @@ export default function ServicesPage() {
       {/* Emergency CTA */}
       <section className="py-16 bg-gradient-to-r from-blue-600 to-blue-800">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Need Emergency Service Right Now?
-          </h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Need Emergency Service Right Now?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
             Our team is available 24/7 for emergency repairs. We guarantee a 2-hour response time for critical equipment failures.
           </p>
@@ -186,7 +156,7 @@ export default function ServicesPage() {
               href="tel:405-242-6028"
               className="inline-flex items-center justify-center rounded-lg bg-white px-8 py-4 text-blue-600 font-bold hover:bg-gray-100 transition-colors text-lg"
             >
-                <DynamicIcon iconName="FaPhone" size={20} color="#3b82f6" className="mr-2" /> Emergency Call: 405-242-6028
+              <DynamicIcon iconName="FaPhone" size={20} color="#3b82f6" className="mr-2" /> Emergency Call: 405-242-6028
             </a>
             <Link
               href="/contact"
@@ -195,9 +165,7 @@ export default function ServicesPage() {
               Request Emergency Service
             </Link>
           </div>
-          <p className="mt-4 text-blue-100">
-            Available 24/7 • Licensed & Insured • 2-Hour Response Guarantee
-          </p>
+          <p className="mt-4 text-blue-100">Available 24/7 • Licensed & Insured • 2-Hour Response Guarantee</p>
         </div>
       </section>
     </div>

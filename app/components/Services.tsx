@@ -1,27 +1,16 @@
-import { homePageData } from '@/data/homepage';
 import Link from 'next/link';
 import { CheckCircle } from 'lucide-react';
 import Image from 'next/image';
 import DynamicIcon from './DynamicIcon';
+import type { HomePageData } from '@/data/homepage';
 
-// Import service data for images
-import { commercialRefrigerationData } from '@/data/services/commercial-refrigeration';
-import { commercialHVACData } from '@/data/services/commercial-hvac';
-import { foodServiceEquipmentData } from '@/data/services/food-service-equipment';
-import { iceMachinesData } from '@/data/services/ice-machines';
-import { preventiveMaintenanceData } from '@/data/services/preventive-maintenance';
-
-export default function Services() {
-  const { services } = homePageData;
-
-  // Mapping service slugs to their hero images
-  const serviceImageMap: Record<string, string> = {
-    'commercial-refrigeration': commercialRefrigerationData.heroImage,
-    'food-service-equipment': foodServiceEquipmentData.heroImage,
-    'commercial-hvac': commercialHVACData.heroImage,
-    'ice-machines': iceMachinesData.heroImage,
-    'preventive-maintenance': preventiveMaintenanceData.heroImage
-  };
+export default function Services({
+  services,
+  serviceImageMap,
+}: {
+  services: HomePageData['services'];
+  serviceImageMap: Record<string, string>;
+}) {
 
   const getIcon = (iconName: string, iconColor?: string) => {
     const icons: Record<string, React.ReactNode> = {

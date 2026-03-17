@@ -72,13 +72,18 @@ async function getStaticPageContent<K extends PageKey>(pageKey: K): Promise<Page
 }
 
 export async function getPageContent<K extends PageKey>(pageKey: K): Promise<PageDataMap[K]> {
+  const staticData = await getStaticPageContent(pageKey);
   try {
     const row = await prisma.pageContent.findUnique({ where: { pageKey } });
-    if (row?.contentJson) return row.contentJson as PageDataMap[K];
+    if (row?.contentJson) {
+      // Shallow-merge: static data provides base keys, DB data overrides what it has.
+      // This ensures any top-level keys not yet saved in the DB still come from static.
+      return { ...(staticData as object), ...(row.contentJson as object) } as PageDataMap[K];
+    }
   } catch {
     // DB unreachable — fall through to static data
   }
-  return getStaticPageContent(pageKey);
+  return staticData;
 }
 
 // ─── Services ────────────────────────────────────────────────────────────────

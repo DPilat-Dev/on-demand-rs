@@ -1,11 +1,10 @@
-import { homePageData } from '@/data/homepage';
 import { Phone, Clock } from 'lucide-react';
 import Image from 'next/image';
 import { BrandCarousel } from './BrandCarousel';
 import DynamicIcon from './DynamicIcon';
+import type { HomePageData } from '@/data/homepage';
 
-export default function Hero() {
-  const { hero } = homePageData;
+export default function Hero({ hero }: { hero: HomePageData['hero'] }) {
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-gray-900 to-blue-900 text-white">
@@ -72,8 +71,8 @@ export default function Hero() {
             <div className="mt-8 flex items-center space-x-4">
               <div className="h-18 w-55 rounded-lg bg-white p-2 flex items-center justify-center">
                 <Image
-                  src={hero.certification.image}
-                  alt={hero.certification.alt}
+                  src={hero.certification?.image ?? '/content/cfesa-logo.png'}
+                  alt={hero.certification?.alt ?? 'Certified & Licensed'}
                   width={180}
                   height={180}
                   className="object-contain"

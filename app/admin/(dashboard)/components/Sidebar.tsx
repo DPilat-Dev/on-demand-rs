@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { getUnreadCount } from '@/lib/content';
-import { signOut } from '@/auth';
+import { auth, signOut } from '@/auth';
 
 const navItems = [
   { href: '/admin', label: 'Dashboard', icon: '▪' },
@@ -13,7 +13,9 @@ const navItems = [
 ];
 
 export default async function Sidebar() {
-  const unreadCount = await getUnreadCount();
+  const [unreadCount, session] = await Promise.all([getUnreadCount(), auth()]);
+  const isAdmin = (session?.user as any)?.role === 'admin';
+  const userName = session?.user?.name ?? session?.user?.email ?? 'Account';
 
   return (
     <aside className="w-64 min-h-screen bg-gray-900 text-gray-100 flex flex-col">
@@ -49,10 +51,30 @@ export default async function Sidebar() {
             </span>
           )}
         </Link>
+
+        {/* Admin-only: User Management */}
+        {isAdmin && (
+          <Link
+            href="/admin/users"
+            className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-gray-300 hover:bg-gray-800 hover:text-white transition-colors"
+          >
+            <span className="text-gray-500">▪</span>
+            Users
+          </Link>
+        )}
       </nav>
 
-      {/* Sign out */}
-      <div className="px-3 py-4 border-t border-gray-700">
+      {/* Account + Sign out */}
+      <div className="px-3 py-4 border-t border-gray-700 space-y-1">
+        <Link
+          href="/admin/account"
+          className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-gray-400 hover:bg-gray-800 hover:text-white transition-colors"
+        >
+          <div className="w-5 h-5 rounded-full bg-gray-600 flex items-center justify-center text-xs font-semibold text-white flex-shrink-0">
+            {userName.charAt(0).toUpperCase()}
+          </div>
+          <span className="truncate">{userName}</span>
+        </Link>
         <form
           action={async () => {
             'use server';

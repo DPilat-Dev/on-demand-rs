@@ -2,6 +2,7 @@ import { auth } from '@/auth';
 import { notFound, redirect } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import { updateUser } from '../actions';
+import { SubmitButton } from '../../components/SubmitButton';
 import Link from 'next/link';
 
 interface PageProps {
@@ -98,12 +99,7 @@ export default async function EditUserPage({ params }: PageProps) {
         </div>
 
         <div className="flex items-center gap-4 pt-2">
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors"
-          >
-            Save Changes
-          </button>
+          <SubmitButton>Save Changes</SubmitButton>
           <Link href="/admin/users" className="text-sm text-gray-500 hover:text-gray-700">
             Cancel
           </Link>

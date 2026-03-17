@@ -1,6 +1,7 @@
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
 import Sidebar from './components/Sidebar';
+import { ToastProvider } from './components/ToastProvider';
 
 export const metadata = { title: 'Admin — OnDemand RS' };
 
@@ -28,7 +29,9 @@ export default async function DashboardLayout({ children }: { children: React.Re
             View Site ↗
           </a>
         </header>
-        <main className="flex-1 p-6">{children}</main>
+        <main className="flex-1 p-6">
+          <ToastProvider>{children}</ToastProvider>
+        </main>
       </div>
     </div>
   );

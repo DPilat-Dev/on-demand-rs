@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import { saveGoogleReviewsSettings, refreshGoogleReviews } from '../actions';
+import { SubmitButton } from '../../components/SubmitButton';
 
 export default async function GoogleReviewsPage() {
   const settings = await prisma.siteSettings.findUnique({ where: { id: 'global' } });
@@ -96,12 +97,7 @@ export default async function GoogleReviewsPage() {
           </div>
         </div>
 
-        <button
-          type="submit"
-          className="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors"
-        >
-          Save Settings
-        </button>
+        <SubmitButton message="Google Reviews settings saved!">Save Settings</SubmitButton>
       </form>
 
       {/* Refresh + cache info */}

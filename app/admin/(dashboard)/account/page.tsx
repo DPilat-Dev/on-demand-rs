@@ -1,6 +1,7 @@
 import { auth } from '@/auth';
 import { prisma } from '@/lib/prisma';
 import { updateAccountInfo, updatePassword } from './actions';
+import { SubmitButton } from '../components/SubmitButton';
 
 export default async function AccountPage() {
   const session = await auth();
@@ -51,12 +52,7 @@ export default async function AccountPage() {
               {role === 'admin' ? 'Admin — full access' : 'Editor — content & services'}
             </p>
           </div>
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors"
-          >
-            Update Profile
-          </button>
+          <SubmitButton message="Profile updated!">Update Profile</SubmitButton>
         </form>
       </div>
 
@@ -96,12 +92,7 @@ export default async function AccountPage() {
               />
             </div>
           </div>
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors"
-          >
-            Update Password
-          </button>
+          <SubmitButton message="Password updated!">Update Password</SubmitButton>
         </form>
       </div>
 

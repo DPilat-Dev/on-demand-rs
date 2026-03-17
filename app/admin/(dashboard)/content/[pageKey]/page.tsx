@@ -4,6 +4,7 @@ import { getPageContent } from '@/lib/content';
 import { savePageContent } from '../../actions';
 import { Field, TextareaField, SectionCard } from '../../components/FormField';
 import { ImageField } from '../../components/ImageField';
+import { SubmitButton } from '../../components/SubmitButton';
 
 interface PageProps {
   params: Promise<{ pageKey: string }>;
@@ -467,12 +468,7 @@ function ServicesListingForm({ data, save }: { data: any; save: (fd: FormData) =
 function SaveBar({ href }: { href: string }) {
   return (
     <div className="flex items-center gap-4 pb-8">
-      <button
-        type="submit"
-        className="bg-blue-600 text-white px-6 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors"
-      >
-        Save Changes
-      </button>
+      <SubmitButton>Save Changes</SubmitButton>
       <Link href={href} className="text-sm text-gray-500 hover:text-gray-700">
         Cancel
       </Link>

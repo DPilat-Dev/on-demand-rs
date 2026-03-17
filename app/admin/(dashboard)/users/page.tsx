@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import { createUser, deleteUser } from './actions';
 import { Field } from '../components/FormField';
+import { SubmitButton } from '../components/SubmitButton';
 import Link from 'next/link';
 
 type UserRow = Awaited<ReturnType<typeof prisma.adminUser.findMany>>[number];
@@ -103,12 +104,7 @@ export default async function UsersPage() {
               </select>
             </div>
           </div>
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors"
-          >
-            Create User
-          </button>
+          <SubmitButton message="User created!">Create User</SubmitButton>
         </form>
       </div>
     </div>

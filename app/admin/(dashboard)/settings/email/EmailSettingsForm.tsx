@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { saveEmailSettings, sendTestEmail, saveEmailTemplate } from '../actions';
+import { SubmitButton } from '../../components/SubmitButton';
 
 interface Props {
   settings: {
@@ -54,7 +55,7 @@ export function EmailSettingsForm({ settings, templates }: Props) {
             name="provider"
             value={provider}
             onChange={(e) => setProvider(e.target.value)}
-            className="w-full max-w-xs rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full max-w-xs rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="resend">Resend</option>
             <option value="smtp">SMTP</option>
@@ -73,7 +74,7 @@ export function EmailSettingsForm({ settings, templates }: Props) {
               type="password"
               name="resendApiKey"
               placeholder={settings.hasResendKey ? 'Leave blank to keep existing key' : 're_...'}
-              className="w-full max-w-md rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full max-w-md rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <p className="text-xs text-gray-400 mt-1">
               Get your key at <span className="font-mono">resend.com/api-keys</span>
@@ -91,7 +92,7 @@ export function EmailSettingsForm({ settings, templates }: Props) {
                   name="smtpHost"
                   defaultValue={settings.smtpHost ?? ''}
                   placeholder="smtp.example.com"
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
               <div>
@@ -100,7 +101,7 @@ export function EmailSettingsForm({ settings, templates }: Props) {
                   type="number"
                   name="smtpPort"
                   defaultValue={settings.smtpPort ?? '587'}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
               <div>
@@ -109,7 +110,7 @@ export function EmailSettingsForm({ settings, templates }: Props) {
                   type="text"
                   name="smtpUser"
                   defaultValue={settings.smtpUser ?? ''}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
               <div>
@@ -123,7 +124,7 @@ export function EmailSettingsForm({ settings, templates }: Props) {
                   type="password"
                   name="smtpPassword"
                   placeholder={settings.hasSmtpPassword ? 'Leave blank to keep existing' : ''}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
             </div>
@@ -138,7 +139,7 @@ export function EmailSettingsForm({ settings, templates }: Props) {
               name="fromEmail"
               defaultValue={settings.fromEmail ?? ''}
               placeholder="noreply@ondemandrs.com"
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <p className="text-xs text-gray-400 mt-1">Sender address for outbound emails</p>
           </div>
@@ -149,19 +150,14 @@ export function EmailSettingsForm({ settings, templates }: Props) {
               name="notificationEmail"
               defaultValue={settings.notificationEmail ?? ''}
               placeholder="you@example.com"
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <p className="text-xs text-gray-400 mt-1">Where contact form alerts are sent</p>
           </div>
         </div>
 
         <div className="flex items-center gap-4 pt-2">
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors"
-          >
-            Save Settings
-          </button>
+          <SubmitButton message="Email settings saved!">Save Settings</SubmitButton>
           <button
             type="button"
             onClick={handleTest}
@@ -246,12 +242,12 @@ function TemplateCard({ template }: { template: { key: string; subject: string; 
               <input type="checkbox" name="isActive" defaultChecked={template.isActive} className="rounded" />
               Active
             </label>
-            <button
-              type="submit"
-              className="bg-blue-600 text-white px-4 py-1.5 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors"
+            <SubmitButton
+              className="bg-blue-600 text-white px-4 py-1.5 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors disabled:opacity-60"
+              message="Template saved!"
             >
               Save Template
-            </button>
+            </SubmitButton>
           </div>
         </form>
       )}

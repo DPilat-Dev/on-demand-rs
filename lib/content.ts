@@ -12,6 +12,9 @@ import { footerData } from '@/data/footer';
 import { type FooterData } from '@/types/footer';
 import { type ServiceData } from '@/types/service';
 
+type ServicePageRow = Awaited<ReturnType<typeof prisma.servicePage.findMany>>[number];
+type FeatureFlagRow = Awaited<ReturnType<typeof prisma.featureFlag.findMany>>[number];
+
 // ─── Static service map (fallback) ───────────────────────────────────────────
 
 async function getStaticServiceMap(): Promise<Record<string, ServiceData>> {
@@ -100,7 +103,7 @@ export async function getAllServices(): Promise<ServiceData[]> {
       where: { isEnabled: true },
       orderBy: { sortOrder: 'asc' },
     });
-    if (rows.length > 0) return rows.map((r) => r.contentJson as ServiceData);
+    if (rows.length > 0) return rows.map((r: ServicePageRow) => r.contentJson as ServiceData);
   } catch {
     // DB unreachable — fall through to static data
   }
@@ -114,7 +117,7 @@ export async function getAllServices(): Promise<ServiceData[]> {
 export async function getFeatureFlags(): Promise<Record<string, boolean>> {
   try {
     const flags = await prisma.featureFlag.findMany();
-    return Object.fromEntries(flags.map((f) => [f.key, f.isEnabled]));
+    return Object.fromEntries(flags.map((f: FeatureFlagRow) => [f.key, f.isEnabled]));
   } catch {
     // DB unreachable — return empty object (all features enabled by default)
     return {};

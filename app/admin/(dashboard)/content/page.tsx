@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
+import type { PageContent } from '@prisma/client';
 
 const PAGES = [
   {
@@ -30,7 +31,7 @@ const PAGES = [
 
 export default async function ContentAdminPage() {
   const rows = await prisma.pageContent.findMany();
-  const savedKeys = new Set(rows.map((r: { pageKey: string }) => r.pageKey));
+  const savedKeys = new Set(rows.map((r: PageContent) => r.pageKey));
 
   return (
     <div className="space-y-6">
@@ -42,7 +43,7 @@ export default async function ContentAdminPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {PAGES.map((page) => {
           const isSaved = savedKeys.has(page.key);
-          const row = rows.find((r) => r.pageKey === page.key);
+          const row = rows.find((r: PageContent) => r.pageKey === page.key);
           return (
             <div
               key={page.key}

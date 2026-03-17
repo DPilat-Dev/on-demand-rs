@@ -66,9 +66,13 @@ export interface ServiceData {
     logo?: string;
   }>;
   sections?: {
+    serviceTypes?: boolean;
     equipment?: boolean;
     brands?: boolean;
+    commonIssues?: boolean;
+    faqs?: boolean;
     industries?: boolean;
+    /** @deprecated use commonIssues */
     faq?: boolean;
     [key: string]: any;
   };

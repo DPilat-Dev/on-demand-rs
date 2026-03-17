@@ -1,0 +1,14 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "OnDemand RS (local)",
+      "Group": "Servers",
+      "Host": "postgres",
+      "Port": 5432,
+      "MaintenanceDB": "ondemand_rs",
+      "Username": "ondemand",
+      "PassFile": "/pgpass",
+      "SSLMode": "prefer"
+    }
+  }
+}

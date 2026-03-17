@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,6 +9,9 @@ export const metadata: Metadata = {
   description: "24/7 emergency restaurant equipment repair in Oklahoma. Licensed technicians for commercial HVAC, refrigeration, ice machines & food service equipment. 2-hour response guaranteed.",
 };
 
+// Minimal root layout — no Header or Footer here.
+// Public pages get Header + Footer from app/(public)/layout.tsx
+// Admin pages get the dashboard shell from app/admin/(dashboard)/layout.tsx
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -19,9 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.className} antialiased bg-white`}>
-        <Header />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
+        {children}
       </body>
     </html>
   );

@@ -5,37 +5,19 @@ import { CheckCircle, Phone, Clock, Shield } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
-import React from 'react';
 import DynamicIcon from '@/app/components/DynamicIcon';
+import { type ServiceData } from '@/types/service';
 
-// Import all service data
-import { commercialRefrigerationData } from '@/data/services/commercial-refrigeration';
-import { commercialHVACData } from '@/data/services/commercial-hvac';
-import { foodServiceEquipmentData } from '@/data/services/food-service-equipment';
-import { iceMachinesData } from '@/data/services/ice-machines';
-import { preventiveMaintenanceData } from '@/data/services/preventive-maintenance';
-
-const serviceDataMap: Record<string, any> = {
-  'commercial-refrigeration': commercialRefrigerationData,
-  'commercial-hvac': commercialHVACData,
-  'food-service-equipment': foodServiceEquipmentData,
-  'ice-machines': iceMachinesData,
-  'preventive-maintenance': preventiveMaintenanceData,
-};
-
-interface PageProps {
-  params: Promise<{ slug: string }>;
+interface ServicePageClientProps {
+  serviceData: ServiceData | null;
 }
 
-export default function ServicePage({ params }: PageProps) {
+export default function ServicePageClient({ serviceData }: ServicePageClientProps) {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
   const toggleFAQ = (index: number) => {
     setOpenFAQ(openFAQ === index ? null : index);
   };
-
-  const unwrappedParams = React.use(params);
-  const serviceData = serviceDataMap[unwrappedParams.slug];
 
   if (!serviceData) {
     notFound();
@@ -119,12 +101,13 @@ export default function ServicePage({ params }: PageProps) {
       </section>
 
       {/* Service Types */}
+      {safeServiceData.serviceTypes.length > 0 && (safeServiceData.sections?.serviceTypes !== false) && (
       <section className="py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
             Our {safeServiceData.name} Services
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {safeServiceData.serviceTypes.map((serviceType: any, index: number) => (
               <div
@@ -150,15 +133,16 @@ export default function ServicePage({ params }: PageProps) {
           </div>
         </div>
       </section>
+      )}
 
-      {/* Equipment - Only show if equipment array exists */}
-      {safeServiceData.equipment.length > 0 && (
+      {/* Equipment */}
+      {safeServiceData.equipment.length > 0 && (safeServiceData.sections?.equipment !== false) && (
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
               Equipment We Service
             </h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {safeServiceData.equipment.map((item: any, index: number) => (
                 <div
@@ -179,8 +163,8 @@ export default function ServicePage({ params }: PageProps) {
         </section>
       )}
 
-       {/* Common Issues Section - Only show if commonIssues array exists and sections.faq is true */}
-       {safeServiceData.commonIssues.length > 0 && (safeServiceData.sections?.faq ?? true) && (
+       {/* Common Issues Section */}
+       {safeServiceData.commonIssues.length > 0 && (safeServiceData.sections?.commonIssues !== false) && (
          <section className="faq-section py-16 bg-gray-50">
            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
              <div className="faq-container max-w-4xl mx-auto">
@@ -238,8 +222,8 @@ export default function ServicePage({ params }: PageProps) {
          </section>
        )}
 
-       {/* Brands Section - Only show if brands array exists and sections.brands is true */}
-       {safeServiceData.brands.length > 0 && (safeServiceData.sections?.brands ?? true) && (
+       {/* Brands Section */}
+       {safeServiceData.brands.length > 0 && (safeServiceData.sections?.brands !== false) && (
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
@@ -327,14 +311,14 @@ export default function ServicePage({ params }: PageProps) {
         </section>
       )}
 
-      {/* FAQs - Only show if faqs array exists */}
-      {safeServiceData.faqs.length > 0 && (
+      {/* FAQs */}
+      {safeServiceData.faqs.length > 0 && (safeServiceData.sections?.faqs !== false) && (
         <section className="py-16">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
               Frequently Asked Questions
             </h2>
-            
+
             <div className="max-w-3xl mx-auto space-y-6">
               {safeServiceData.faqs.map((faq: any, index: number) => (
                 <div
@@ -364,7 +348,7 @@ export default function ServicePage({ params }: PageProps) {
             <p className="text-xl mb-8">
               {safeServiceData.cta.description}
             </p>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               <div className="bg-white/10 rounded-lg p-6">
                 <Clock className="h-8 w-8 text-white mx-auto mb-4" />

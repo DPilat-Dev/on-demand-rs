@@ -1,0 +1,135 @@
+// Prisma schema for OnDemand Restaurant Service CRM
+// Docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─────────────────────────────────────────
+// Auth
+// ─────────────────────────────────────────
+
+model AdminUser {
+  id             String   @id @default(cuid())
+  email          String   @unique
+  hashedPassword String
+  name           String
+  createdAt      DateTime @default(now())
+}
+
+// ─────────────────────────────────────────
+// Content
+// ─────────────────────────────────────────
+
+/// Editable content for static pages: homepage, about, contact, footer
+model PageContent {
+  id          String   @id @default(cuid())
+  /// One of: "homepage" | "about" | "contact" | "footer"
+  pageKey     String   @unique
+  /// Full page data blob matching the shape in ./data/
+  contentJson Json
+  updatedAt   DateTime @updatedAt
+  updatedBy   String?
+}
+
+/// One row per service page — supports add, edit, enable/disable
+model ServicePage {
+  id          String   @id @default(cuid())
+  /// URL slug — e.g. "commercial-refrigeration"
+  slug        String   @unique
+  /// Denormalized display name for list queries
+  name        String
+  /// When false, the public /services/[slug] route returns 404
+  isEnabled   Boolean  @default(true)
+  /// Controls display order on /services listing
+  sortOrder   Int      @default(0)
+  /// Full ServiceData blob matching types/service.ts
+  contentJson Json
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  updatedBy   String?
+}
+
+// ─────────────────────────────────────────
+// Feature Flags
+// ─────────────────────────────────────────
+
+/// Global on/off switches for page sections and integrations
+model FeatureFlag {
+  id          String   @id @default(cuid())
+  /// Dot-namespaced key — e.g. "homepage.testimonials"
+  key         String   @unique
+  label       String
+  description String?
+  isEnabled   Boolean  @default(true)
+  updatedAt   DateTime @updatedAt
+}
+
+// ─────────────────────────────────────────
+// Contact / CRM
+// ─────────────────────────────────────────
+
+/// Contact form submissions — replaces console.log in /api/contact
+model ContactSubmission {
+  id          String   @id @default(cuid())
+  name        String
+  email       String
+  phone       String
+  serviceType String?
+  message     String
+  /// false = unread (shown as badge in admin sidebar)
+  isRead      Boolean  @default(false)
+  isArchived  Boolean  @default(false)
+  submittedAt DateTime @default(now())
+  ipAddress   String?
+}
+
+// ─────────────────────────────────────────
+// Settings
+// ─────────────────────────────────────────
+
+/// Single-row settings table — always upsert with id = "global"
+model SiteSettings {
+  id String @id @default("global")
+
+  // Email
+  /// "resend" | "smtp"
+  emailProvider     String?
+  /// Provider config JSON — API keys stored encrypted via lib/crypto.ts
+  emailConfig       Json?
+  /// Where contact form alerts are sent
+  notificationEmail String?
+  /// Sender address for outbound emails
+  fromEmail         String?
+
+  // Google Reviews
+  googlePlacesId              String?
+  googleReviewsEnabled        Boolean  @default(false)
+  /// Minimum star rating to display (1–5)
+  googleReviewsMinRating      Int      @default(4)
+  /// Max number of reviews to show on site
+  googleReviewsMaxCount       Int      @default(10)
+  /// How often to refresh the cache (hours)
+  googleReviewsCacheTtlHours  Int      @default(24)
+  /// Cached Google Places reviews response
+  cachedReviews               Json?
+  cachedReviewsAt             DateTime?
+
+  updatedAt DateTime @updatedAt
+}
+
+/// Editable email templates
+model EmailTemplate {
+  id        String   @id @default(cuid())
+  /// e.g. "contact_notification" | "contact_confirmation"
+  key       String   @unique
+  subject   String
+  /// HTML or plain text body
+  body      String
+  isActive  Boolean  @default(true)
+  updatedAt DateTime @updatedAt
+}

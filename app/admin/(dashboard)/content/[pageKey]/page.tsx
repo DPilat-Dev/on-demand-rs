@@ -14,6 +14,7 @@ const PAGE_META: Record<string, { label: string; path: string }> = {
   about: { label: 'About Us', path: '/about' },
   contact: { label: 'Contact Page', path: '/contact' },
   footer: { label: 'Footer', path: '/' },
+  'services-listing': { label: 'Services Listing Page', path: '/services' },
 };
 
 export default async function ContentEditorPage({ params }: PageProps) {
@@ -70,6 +71,8 @@ async function ContentForm({
       return <ContactForm data={data} save={save} />;
     case 'footer':
       return <FooterForm data={data} save={save} />;
+    case 'services-listing':
+      return <ServicesListingForm data={data} save={save} />;
     default:
       return null;
   }
@@ -425,6 +428,33 @@ function FooterForm({ data, save }: { data: any; save: (fd: FormData) => Promise
         <Field label="License" name="legalLicense" defaultValue={data.legal?.license ?? ''} />
         <Field label="Privacy Policy URL" name="legalPrivacy" defaultValue={data.legal?.privacyPolicy ?? ''} />
         <Field label="Terms of Service URL" name="legalTerms" defaultValue={data.legal?.termsOfService ?? ''} />
+      </SectionCard>
+
+      <SaveBar href="/admin/content" />
+    </form>
+  );
+}
+
+// ─── Services Listing ─────────────────────────────────────────────────────────
+
+function ServicesListingForm({ data, save }: { data: any; save: (fd: FormData) => Promise<void> }) {
+  return (
+    <form action={save} className="space-y-6">
+      <SectionCard title="Hero Section">
+        <Field label="Title" name="heroTitle" defaultValue={data.hero?.title ?? ''} />
+        <Field label="Subtitle" name="heroSubtitle" defaultValue={data.hero?.subtitle ?? ''} />
+        <Field label="Phone" name="heroPhone" defaultValue={data.hero?.phone ?? ''} />
+        <ImageField label="Hero Image" name="heroImage" defaultValue={data.hero?.heroImage ?? ''} hint="Upload via Media Library or paste a URL" />
+        <Field label="Hero Image Alt Text" name="heroImageAlt" defaultValue={data.hero?.heroImageAlt ?? ''} />
+        <Field label="Overlay Title" name="heroOverlayTitle" defaultValue={data.hero?.overlayTitle ?? ''} />
+        <Field label="Overlay Subtitle" name="heroOverlaySubtitle" defaultValue={data.hero?.overlaySubtitle ?? ''} />
+      </SectionCard>
+
+      <SectionCard title="Emergency CTA Section">
+        <Field label="Title" name="emergencyTitle" defaultValue={data.emergencyCTA?.title ?? ''} />
+        <TextareaField label="Description" name="emergencyDescription" defaultValue={data.emergencyCTA?.description ?? ''} rows={3} />
+        <Field label="Phone" name="emergencyPhone" defaultValue={data.emergencyCTA?.phone ?? ''} />
+        <Field label="Footer Text" name="emergencyFooter" defaultValue={data.emergencyCTA?.footer ?? ''} hint="e.g. Available 24/7 • Licensed & Insured" />
       </SectionCard>
 
       <SaveBar href="/admin/content" />

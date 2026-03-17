@@ -314,11 +314,32 @@ function buildFooterContent(fd: FormData) {
   };
 }
 
+function buildServicesListingContent(fd: FormData) {
+  return {
+    hero: {
+      title: fd.get('heroTitle'),
+      subtitle: fd.get('heroSubtitle'),
+      phone: fd.get('heroPhone'),
+      heroImage: fd.get('heroImage'),
+      heroImageAlt: fd.get('heroImageAlt'),
+      overlayTitle: fd.get('heroOverlayTitle'),
+      overlaySubtitle: fd.get('heroOverlaySubtitle'),
+    },
+    emergencyCTA: {
+      title: fd.get('emergencyTitle'),
+      description: fd.get('emergencyDescription'),
+      phone: fd.get('emergencyPhone'),
+      footer: fd.get('emergencyFooter'),
+    },
+  };
+}
+
 const CONTENT_BUILDERS: Record<string, (fd: FormData) => object> = {
   homepage: buildHomepageContent,
   about: buildAboutContent,
   contact: buildContactContent,
   footer: buildFooterContent,
+  'services-listing': buildServicesListingContent,
 };
 
 export async function savePageContent(pageKey: string, formData: FormData) {
@@ -337,6 +358,7 @@ export async function savePageContent(pageKey: string, formData: FormData) {
     about: ['/about'],
     contact: ['/contact'],
     footer: ['/'],
+    'services-listing': ['/services'],
   };
 
   for (const path of pathMap[pageKey] ?? ['/']) {

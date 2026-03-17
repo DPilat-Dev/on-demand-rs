@@ -28,6 +28,12 @@ const PAGES = [
     description: 'Company info, nav links, social media, certifications, legal text',
     path: '/',
   },
+  {
+    key: 'services-listing',
+    label: 'Services Listing Page',
+    description: 'Hero section and emergency CTA for the /services listing page',
+    path: '/services',
+  },
 ];
 
 export default async function ContentAdminPage() {

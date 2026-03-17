@@ -9,6 +9,7 @@
 import { prisma } from './prisma';
 import { homePageData, type HomePageData } from '@/data/homepage';
 import { footerData } from '@/data/footer';
+import { servicesListingData, type ServicesListingData } from '@/data/services-listing';
 import { type FooterData } from '@/types/footer';
 import { type ServiceData } from '@/types/service';
 
@@ -43,13 +44,14 @@ async function getStaticServiceMap(): Promise<Record<string, ServiceData>> {
 
 // ─── Page content ─────────────────────────────────────────────────────────────
 
-type PageKey = 'homepage' | 'about' | 'contact' | 'footer';
+type PageKey = 'homepage' | 'about' | 'contact' | 'footer' | 'services-listing';
 
 type PageDataMap = {
   homepage: HomePageData;
   about: unknown;
   contact: unknown;
   footer: FooterData;
+  'services-listing': ServicesListingData;
 };
 
 async function getStaticPageContent<K extends PageKey>(pageKey: K): Promise<PageDataMap[K]> {
@@ -58,6 +60,8 @@ async function getStaticPageContent<K extends PageKey>(pageKey: K): Promise<Page
       return homePageData as PageDataMap[K];
     case 'footer':
       return footerData as PageDataMap[K];
+    case 'services-listing':
+      return servicesListingData as PageDataMap[K];
     case 'about': {
       const { aboutUsData } = await import('@/data/about');
       return aboutUsData as PageDataMap[K];

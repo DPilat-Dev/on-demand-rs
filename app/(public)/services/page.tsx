@@ -4,14 +4,17 @@ import Image from 'next/image';
 import DynamicIcon from '@/app/components/DynamicIcon';
 import { getPageContent, getAllServices } from '@/lib/content';
 import type { HomePageData } from '@/data/homepage';
+import type { ServicesListingData } from '@/data/services-listing';
 
 export default async function ServicesPage() {
-  const [homepageData, allServices] = await Promise.all([
+  const [homepageData, listingData, allServices] = await Promise.all([
     getPageContent('homepage') as Promise<HomePageData>,
+    getPageContent('services-listing') as Promise<ServicesListingData>,
     getAllServices(),
   ]);
 
   const { services } = homepageData;
+  const { hero, emergencyCTA } = listingData;
 
   const serviceImageMap: Record<string, string> = Object.fromEntries(
     allServices.map((s) => [s.slug, s.heroImage ?? ''])
@@ -38,18 +41,17 @@ export default async function ServicesPage() {
           <div className="flex flex-col lg:flex-row gap-12 items-center">
             <div className="max-w-3xl lg:flex-1">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-                Our Professional Services
+                {hero.title}
               </h1>
               <p className="text-xl text-gray-300 mb-8">
-                Comprehensive commercial kitchen equipment services across Oklahoma.
-                Licensed technicians with 45+ years combined experience.
+                {hero.subtitle}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <a
-                  href="tel:405-242-6028"
+                  href={`tel:${hero.phone}`}
                   className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-6 py-3 text-white font-semibold hover:bg-blue-700 transition-colors"
                 >
-                  <DynamicIcon iconName="FaPhone" size={20} color="white" className="mr-2" /> Call Now: 405-242-6028
+                  <DynamicIcon iconName="FaPhone" size={20} color="white" className="mr-2" /> Call Now: {hero.phone}
                 </a>
                 <Link
                   href="/contact"
@@ -62,8 +64,8 @@ export default async function ServicesPage() {
             <div className="lg:w-1/2 lg:max-w-xl">
               <div className="relative rounded-2xl overflow-hidden shadow-2xl">
                 <Image
-                  src="/content/optimized/Licensed-Technicians-homepage-image.webp"
-                  alt="Licensed technicians providing professional service"
+                  src={hero.heroImage}
+                  alt={hero.heroImageAlt}
                   width={600}
                   height={400}
                   className="w-full h-auto object-cover"
@@ -72,8 +74,8 @@ export default async function ServicesPage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">
                   <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                    <p className="text-white font-semibold text-lg">Certified & Licensed Technicians</p>
-                    <p className="text-gray-200 text-sm mt-1">45+ Years Combined Experience • 24/7 Emergency Support</p>
+                    <p className="text-white font-semibold text-lg">{hero.overlayTitle}</p>
+                    <p className="text-gray-200 text-sm mt-1">{hero.overlaySubtitle}</p>
                   </div>
                 </div>
               </div>
@@ -147,16 +149,14 @@ export default async function ServicesPage() {
       {/* Emergency CTA */}
       <section className="py-16 bg-gradient-to-r from-blue-600 to-blue-800">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Need Emergency Service Right Now?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Our team is available 24/7 for emergency repairs. We guarantee a 2-hour response time for critical equipment failures.
-          </p>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">{emergencyCTA.title}</h2>
+          <p className="text-xl mb-8 max-w-2xl mx-auto">{emergencyCTA.description}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="tel:405-242-6028"
+              href={`tel:${emergencyCTA.phone}`}
               className="inline-flex items-center justify-center rounded-lg bg-white px-8 py-4 text-blue-600 font-bold hover:bg-gray-100 transition-colors text-lg"
             >
-              <DynamicIcon iconName="FaPhone" size={20} color="#3b82f6" className="mr-2" /> Emergency Call: 405-242-6028
+              <DynamicIcon iconName="FaPhone" size={20} color="#3b82f6" className="mr-2" /> Emergency Call: {emergencyCTA.phone}
             </a>
             <Link
               href="/contact"
@@ -165,7 +165,7 @@ export default async function ServicesPage() {
               Request Emergency Service
             </Link>
           </div>
-          <p className="mt-4 text-blue-100">Available 24/7 • Licensed & Insured • 2-Hour Response Guarantee</p>
+          <p className="mt-4 text-blue-100">{emergencyCTA.footer}</p>
         </div>
       </section>
     </div>

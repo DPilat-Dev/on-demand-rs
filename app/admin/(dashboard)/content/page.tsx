@@ -30,7 +30,7 @@ const PAGES = [
 
 export default async function ContentAdminPage() {
   const rows = await prisma.pageContent.findMany();
-  const savedKeys = new Set(rows.map((r) => r.pageKey));
+  const savedKeys = new Set(rows.map((r: { pageKey: string }) => r.pageKey));
 
   return (
     <div className="space-y-6">

@@ -66,9 +66,9 @@ async function sendViaResend(
     from: cfg.fromEmail,
     to: options.to,
     subject: options.subject,
-    html: options.html,
+    html: options.html ?? options.text ?? '',
     text: options.text,
-  });
+  } as Parameters<typeof resend.emails.send>[0]);
 
   if (result.error) {
     return { success: false, error: result.error.message };

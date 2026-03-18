@@ -41,7 +41,7 @@ export default async function EditUserPage({ params }: PageProps) {
               name="name"
               defaultValue={user.name}
               required
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div>
@@ -51,7 +51,7 @@ export default async function EditUserPage({ params }: PageProps) {
               name="email"
               defaultValue={user.email}
               required
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
         </div>
@@ -62,7 +62,7 @@ export default async function EditUserPage({ params }: PageProps) {
             <select
               name="role"
               defaultValue={user.role}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="editor">Editor — content &amp; services only</option>
               <option value="admin">Admin — full access</option>
@@ -74,7 +74,7 @@ export default async function EditUserPage({ params }: PageProps) {
               name="isActive"
               defaultValue={user.isActive ? 'true' : 'false'}
               disabled={isSelf}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:text-gray-400"
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:text-gray-400"
             >
               <option value="true">Active</option>
               <option value="false">Inactive (cannot log in)</option>
@@ -93,7 +93,7 @@ export default async function EditUserPage({ params }: PageProps) {
             type="password"
             name="newPassword"
             minLength={8}
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Min. 8 characters"
           />
         </div>

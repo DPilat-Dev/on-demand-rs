@@ -1,4 +1,4 @@
-import { getPageContent, getAllServices } from '@/lib/content';
+import { getPageContent, getAllServices, getGoogleReviews } from '@/lib/content';
 import type { HomePageData } from '@/data/homepage';
 import Hero from '@/app/components/Hero';
 import Services from '@/app/components/Services';
@@ -7,9 +7,10 @@ import WhyChooseUs from '@/app/components/WhyChooseUs';
 import ContactCTA from '@/app/components/ContactCTA';
 
 export default async function Home() {
-  const [data, allServices] = await Promise.all([
+  const [data, allServices, googleReviews] = await Promise.all([
     getPageContent('homepage') as Promise<HomePageData>,
     getAllServices(),
+    getGoogleReviews(),
   ]);
 
   return (
@@ -17,7 +18,7 @@ export default async function Home() {
       <Hero hero={data.hero} />
       <Services services={data.services} allServices={allServices} />
       <WhyChooseUs whyChooseUs={data.whyChooseUs} />
-      <Testimonials testimonials={data.testimonials} />
+      <Testimonials testimonials={data.testimonials} googleReviews={googleReviews} />
       <ContactCTA contact={data.contact} emergencyCTA={data.emergencyCTA} />
     </>
   );

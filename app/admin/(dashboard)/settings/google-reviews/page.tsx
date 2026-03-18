@@ -53,7 +53,7 @@ export default async function GoogleReviewsPage() {
             name="googlePlacesId"
             defaultValue={settings?.googlePlacesId ?? ''}
             placeholder="ChIJ..."
-            className="w-full max-w-md rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full max-w-md rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <p className="text-xs text-gray-400 mt-1">
             Find your Place ID at{' '}
@@ -67,7 +67,7 @@ export default async function GoogleReviewsPage() {
             <select
               name="googleReviewsMinRating"
               defaultValue={settings?.googleReviewsMinRating ?? 4}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               {[1, 2, 3, 4, 5].map((n) => (
                 <option key={n} value={n}>{n} star{n > 1 ? 's' : ''} and above</option>
@@ -82,7 +82,7 @@ export default async function GoogleReviewsPage() {
               defaultValue={settings?.googleReviewsMaxCount ?? 10}
               min={1}
               max={50}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div>
@@ -92,7 +92,7 @@ export default async function GoogleReviewsPage() {
               name="googleReviewsCacheTtlHours"
               defaultValue={settings?.googleReviewsCacheTtlHours ?? 24}
               min={1}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
         </div>

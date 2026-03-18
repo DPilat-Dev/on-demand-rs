@@ -133,6 +133,33 @@ export async function getFeatureFlags(): Promise<Record<string, boolean>> {
   }
 }
 
+// ─── Google Reviews ───────────────────────────────────────────────────────────
+
+export interface GoogleReview {
+  author_name: string;
+  rating: number;
+  text: string;
+  time: number;
+  profile_photo_url?: string;
+}
+
+export async function getGoogleReviews(): Promise<{ enabled: boolean; reviews: GoogleReview[] }> {
+  try {
+    const settings = await prisma.siteSettings.findUnique({ where: { id: 'global' } });
+    if (!settings?.googleReviewsEnabled) return { enabled: false, reviews: [] };
+    const cached = settings.cachedReviews as any;
+    const all: GoogleReview[] = cached?.reviews ?? [];
+    const minRating = settings.googleReviewsMinRating ?? 4;
+    const maxCount = settings.googleReviewsMaxCount ?? 10;
+    const reviews = all
+      .filter((r) => r.rating >= minRating)
+      .slice(0, maxCount);
+    return { enabled: true, reviews };
+  } catch {
+    return { enabled: false, reviews: [] };
+  }
+}
+
 // ─── Unread submission count (for admin sidebar badge) ────────────────────────
 
 export async function getUnreadCount(): Promise<number> {

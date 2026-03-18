@@ -150,7 +150,7 @@ export default function ServicePageClient({ serviceData }: ServicePageClientProp
                   className="bg-white rounded-xl border border-gray-200 hover:shadow-lg transition-shadow overflow-hidden"
                 >
                   {item.image ? (
-                    <div className="relative w-full h-48 bg-gray-50">
+                    <div className="relative w-full h-80 bg-gray-50">
                       <Image
                         src={item.image}
                         alt={item.name}

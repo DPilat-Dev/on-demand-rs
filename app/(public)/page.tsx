@@ -12,14 +12,10 @@ export default async function Home() {
     getAllServices(),
   ]);
 
-  const serviceImageMap: Record<string, string> = Object.fromEntries(
-    allServices.map((s) => [s.slug, s.heroImage ?? ''])
-  );
-
   return (
     <>
       <Hero hero={data.hero} />
-      <Services services={data.services} serviceImageMap={serviceImageMap} />
+      <Services services={data.services} allServices={allServices} />
       <WhyChooseUs whyChooseUs={data.whyChooseUs} />
       <Testimonials testimonials={data.testimonials} />
       <ContactCTA contact={data.contact} emergencyCTA={data.emergencyCTA} />

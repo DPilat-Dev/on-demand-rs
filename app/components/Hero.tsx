@@ -93,14 +93,9 @@ export default function Hero({ hero }: { hero: HomePageData['hero'] }) {
                 videos={hero.heroVideos ?? []}
                 image={hero.backgroundImage}
                 imageAlt={hero.backgroundImageAlt}
+                overlayTitle="Professional Service • 24/7 Support"
+                overlaySubtitle="Licensed technicians ready to help"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6">
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                  <p className="text-white font-semibold text-lg">Professional Service • 24/7 Support</p>
-                  <p className="text-gray-200 text-sm mt-1">Licensed technicians ready to help</p>
-                </div>
-              </div>
             </div>
           </div>
         </div>

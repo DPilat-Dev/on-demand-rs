@@ -147,27 +147,29 @@ export default function ServicePageClient({ serviceData }: ServicePageClientProp
               {safeServiceData.equipment.map((item: any, index: number) => (
                 <div
                   key={index}
-                  className="bg-white rounded-xl p-6 border border-gray-200 hover:shadow-lg transition-shadow"
+                  className="bg-white rounded-xl border border-gray-200 hover:shadow-lg transition-shadow overflow-hidden"
                 >
                   {item.image ? (
-                    <div className="relative w-full h-32 mb-4 rounded-lg overflow-hidden bg-gray-50">
+                    <div className="relative w-full h-48 bg-gray-50">
                       <Image
                         src={item.image}
                         alt={item.name}
                         fill
-                        className="object-contain"
+                        className="object-cover"
                         sizes="(max-width: 768px) 100vw, 33vw"
                       />
                     </div>
                   ) : (
-                    <div className="text-2xl mb-4">{item.icon}</div>
+                    <div className="text-2xl px-6 pt-6">{item.icon}</div>
                   )}
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                    {item.name}
-                  </h3>
-                  <p className="text-gray-600">
-                    {item.description}
-                  </p>
+                  <div className="p-6">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                      {item.name}
+                    </h3>
+                    <p className="text-gray-600">
+                      {item.description}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>

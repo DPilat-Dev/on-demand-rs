@@ -52,8 +52,10 @@ export function HeroMedia({ videos, image, imageAlt, overlayTitle, overlaySubtit
         />
       )}
 
-      {/* Gradient overlay — always visible */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+      {/* Gradient overlay — image only */}
+      {!selectedVideo && (
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+      )}
 
       {/* Text overlay — hidden when video is playing */}
       {!selectedVideo && (

@@ -230,6 +230,10 @@ function AboutForm({ data, save }: { data: any; save: (fd: FormData) => Promise<
         <Field label="Subtitle" name="heroSubtitle" defaultValue={data.hero?.subtitle ?? ''} />
         <TextareaField label="Description" name="heroDescription" defaultValue={data.hero?.description ?? ''} rows={2} />
         <ImageField label="Background Image" name="heroBackgroundImage" defaultValue={data.hero?.backgroundImage ?? ''} hint="Upload via Media Library or paste a URL" />
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Hero Videos</label>
+          <VideoListField name="heroVideos" defaultValue={data.hero?.heroVideos ?? []} hint="One video is randomly selected each page load. Clear all to use the background image instead." />
+        </div>
       </SectionCard>
 
       <SectionCard title="Mission">

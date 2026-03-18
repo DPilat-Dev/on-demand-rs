@@ -228,6 +228,7 @@ function buildAboutContent(fd: FormData) {
       subtitle: fd.get('heroSubtitle'),
       description: fd.get('heroDescription'),
       backgroundImage: fd.get('heroBackgroundImage'),
+      heroVideos: tryJson(fd.get('heroVideos') as string, []),
     },
     mission: { title: fd.get('missionTitle'), content: fd.get('missionContent') },
     story: {

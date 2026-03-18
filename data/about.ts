@@ -26,6 +26,7 @@ export interface AboutUsData {
     subtitle: string;
     description: string;
     backgroundImage?: string;
+    heroVideos?: string[];
   };
   mission: {
     title: string;

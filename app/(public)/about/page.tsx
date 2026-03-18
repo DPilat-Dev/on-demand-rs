@@ -1,9 +1,14 @@
 import { Shield, Clock, Users, Award, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
-import Image from 'next/image';
 import DynamicIcon from '@/app/components/DynamicIcon';
+import { HeroMedia } from '@/app/components/HeroMedia';
+import { getPageContent } from '@/lib/content';
+import type { AboutUsData } from '@/data/about';
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const data = await getPageContent('about') as AboutUsData;
+  const { hero } = data;
+
   const features = [
     {
       icon: <Shield className="h-8 w-8" />,
@@ -45,17 +50,17 @@ export default function AboutPage() {
             {/* Left Content */}
             <div className="max-w-3xl lg:flex-1">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-                About OnDemand Restaurant Service
+                {hero.title}
               </h1>
               <p className="text-xl text-gray-300 mb-8">
-                Oklahoma's most trusted restaurant equipment experts with 45+ years of combined experience serving commercial kitchens across the state.
+                {hero.subtitle}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <a
                   href="tel:405-242-6028"
                   className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-6 py-3 text-white font-semibold hover:bg-blue-700 transition-colors"
                 >
-                    <DynamicIcon iconName="FaPhone" size={20} color="white" className="mr-2" /> Call Now: 405-242-6028
+                  <DynamicIcon iconName="FaPhone" size={20} color="white" className="mr-2" /> Call Now: 405-242-6028
                 </a>
                 <Link
                   href="/contact"
@@ -66,24 +71,16 @@ export default function AboutPage() {
               </div>
             </div>
 
-            {/* Right Image Section */}
+            {/* Right Image / Video Section */}
             <div className="lg:w-1/2 lg:max-w-xl">
               <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-                <Image
-                  src="/content/optimized/Superior-Service-Approach-homepage-image.webp"
-                  alt="OnDemand Restaurant Service team providing superior service"
-                  width={600}
-                  height={400}
-                  className="w-full h-auto object-cover"
-                  priority
+                <HeroMedia
+                  videos={hero.heroVideos ?? []}
+                  image={hero.backgroundImage ?? '/content/optimized/Superior-Service-Approach-homepage-image.webp'}
+                  imageAlt="OnDemand Restaurant Service team providing superior service"
+                  overlayTitle="Superior Service Approach"
+                  overlaySubtitle="45+ Years Experience • CFESA Certified • 24/7 Support"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <div className="absolute bottom-6 left-6 right-6">
-                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                    <p className="text-white font-semibold text-lg">Superior Service Approach</p>
-                    <p className="text-gray-200 text-sm mt-1">45+ Years Experience • CFESA Certified • 24/7 Support</p>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -118,7 +115,7 @@ export default function AboutPage() {
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-12 text-center">
             Why Choose OnDemand
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
               <div
@@ -147,7 +144,7 @@ export default function AboutPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">
               Our Values
             </h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {values.map((value, index) => (
                 <div key={index} className="flex items-start">
@@ -198,7 +195,7 @@ export default function AboutPage() {
               href="tel:405-242-6028"
               className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-8 py-4 text-white font-bold hover:bg-blue-700 transition-colors text-lg"
             >
-                <DynamicIcon iconName="FaPhone" size={20} color="white" className="mr-2" /> Call Now: 405-242-6028
+              <DynamicIcon iconName="FaPhone" size={20} color="white" className="mr-2" /> Call Now: 405-242-6028
             </a>
             <Link
               href="/contact"

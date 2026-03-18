@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import Image from 'next/image';
+import { upload } from '@vercel/blob/client';
 
 interface BlobItem {
   url: string;
@@ -49,14 +50,12 @@ export default function MediaLibraryPage() {
     setError('');
     try {
       await Promise.all(
-        files.map(async (file) => {
-          const fd = new FormData();
-          fd.append('file', file);
-          const res = await fetch('/api/admin/upload', { method: 'POST', body: fd });
-          if (!res.ok) {
-            const { error: msg } = await res.json();
-            throw new Error(msg);
-          }
+        files.map((file) => {
+          const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '-').toLowerCase();
+          return upload(`content/${safeName}`, file, {
+            access: 'public',
+            handleUploadUrl: '/api/admin/upload',
+          });
         })
       );
       await fetchBlobs();

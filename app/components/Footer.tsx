@@ -131,11 +131,8 @@ export default function Footer() {
             <p className="text-gray-400 text-sm">{footerData.legal.copyright}</p>
             <p className="text-gray-400 text-sm">{footerData.legal.license}</p>
             <div className="flex items-center space-x-4">
-              <Link href={footerData.legal.privacyPolicy} className="text-gray-400 hover:text-white text-sm">
-                Privacy Policy
-              </Link>
-              <Link href={footerData.legal.termsOfService} className="text-gray-400 hover:text-white text-sm">
-                Terms of Service
+              <Link href="/admin" className="text-gray-400 hover:text-white text-sm">
+                Admin
               </Link>
             </div>
           </div>

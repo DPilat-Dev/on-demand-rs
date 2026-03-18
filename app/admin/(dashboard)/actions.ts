@@ -153,6 +153,7 @@ function buildHomepageContent(fd: FormData) {
       subtitle: fd.get('heroSubtitle'),
       backgroundImage: fd.get('heroBackgroundImage'),
       backgroundImageAlt: fd.get('heroBackgroundImageAlt'),
+      heroVideos: tryJson(fd.get('heroVideos') as string, []),
       form: { buttonText: fd.get('heroButtonText'), emailPlaceholder: 'Email' },
       emergency: { phone: fd.get('heroPhone'), text: fd.get('heroEmergencyText') },
       certification: {

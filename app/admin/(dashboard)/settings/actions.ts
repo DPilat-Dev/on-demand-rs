@@ -42,17 +42,17 @@ export async function saveEmailSettings(formData: FormData) {
   revalidatePath('/admin/settings/email');
 }
 
-export async function sendTestEmail() {
+export async function sendTestEmail(): Promise<{ success: boolean; error?: string }> {
   const settings = await prisma.siteSettings.findUnique({ where: { id: 'global' } });
-  if (!settings?.notificationEmail) throw new Error('No notification email configured');
+  if (!settings?.notificationEmail) {
+    return { success: false, error: 'No notification email configured' };
+  }
 
-  const result = await sendEmail({
+  return sendEmail({
     to: settings.notificationEmail,
     subject: 'Test Email — OnDemand RS Admin',
     html: '<p>Your email settings are working correctly. This test was sent from the OnDemand RS admin dashboard.</p>',
   });
-
-  if (!result.success) throw new Error(result.error ?? 'Failed to send test email');
 }
 
 export async function saveEmailTemplate(key: string, formData: FormData) {

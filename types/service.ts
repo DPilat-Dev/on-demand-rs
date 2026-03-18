@@ -8,6 +8,7 @@ export interface EquipmentItem {
   name: string;
   description: string;
   icon: string;
+  image?: string;
 }
 
 export interface FAQItem {

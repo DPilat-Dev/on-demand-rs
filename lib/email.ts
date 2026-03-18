@@ -62,18 +62,22 @@ async function sendViaResend(
   });
 
   const resend = new Resend(cfg.config.apiKey);
-  const result = await resend.emails.send({
-    from: cfg.fromEmail,
-    to: options.to,
-    subject: options.subject,
-    html: options.html ?? options.text ?? '',
-    text: options.text,
-  } as Parameters<typeof resend.emails.send>[0]);
+  try {
+    const result = await resend.emails.send({
+      from: cfg.fromEmail,
+      to: options.to,
+      subject: options.subject,
+      html: options.html ?? options.text ?? '',
+      text: options.text,
+    } as Parameters<typeof resend.emails.send>[0]);
 
-  if (result.error) {
-    return { success: false, error: result.error.message };
+    if (result.error) {
+      return { success: false, error: result.error.message };
+    }
+    return { success: true };
+  } catch (e: any) {
+    return { success: false, error: e?.message ?? 'Resend request failed' };
   }
-  return { success: true };
 }
 
 async function sendViaSMTP(

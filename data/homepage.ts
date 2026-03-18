@@ -72,6 +72,7 @@ export interface HomePageData {
     };
     backgroundImage: string;
     backgroundImageAlt: string;
+    heroVideos?: string[];
   };
   
   whyChoose: {

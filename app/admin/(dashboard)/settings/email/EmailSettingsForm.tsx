@@ -33,12 +33,12 @@ export function EmailSettingsForm({ settings, templates }: Props) {
     setTestStatus('sending');
     setTestError('');
     startTransition(async () => {
-      try {
-        await sendTestEmail();
+      const result = await sendTestEmail();
+      if (result.success) {
         setTestStatus('ok');
-      } catch (e: any) {
+      } else {
         setTestStatus('error');
-        setTestError(e.message ?? 'Unknown error');
+        setTestError(result.error ?? 'Unknown error');
       }
     });
   }

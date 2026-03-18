@@ -1,7 +1,8 @@
-import { Phone, Clock } from 'lucide-react';
 import Image from 'next/image';
+import { Phone, Clock } from 'lucide-react';
 import { BrandCarousel } from './BrandCarousel';
 import DynamicIcon from './DynamicIcon';
+import { HeroMedia } from './HeroMedia';
 import type { HomePageData } from '@/data/homepage';
 
 export default function Hero({ hero }: { hero: HomePageData['hero'] }) {
@@ -85,16 +86,13 @@ export default function Hero({ hero }: { hero: HomePageData['hero'] }) {
             </div>
           </div>
 
-          {/* Right Image Section */}
+          {/* Right Image / Video Section */}
           <div className="lg:w-1/2 lg:max-w-xl">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-              <Image
-                src={hero.backgroundImage}
-                alt={hero.backgroundImageAlt}
-                width={600}
-                height={400}
-                className="w-full h-auto object-cover"
-                priority
+              <HeroMedia
+                videos={hero.heroVideos ?? []}
+                image={hero.backgroundImage}
+                imageAlt={hero.backgroundImageAlt}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
               <div className="absolute bottom-6 left-6 right-6">

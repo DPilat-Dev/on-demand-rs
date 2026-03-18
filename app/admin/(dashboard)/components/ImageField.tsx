@@ -74,7 +74,10 @@ export function ImageField({
 
 // ─── Media Picker Modal ───────────────────────────────────────────────────────
 
-function MediaPickerModal({
+const VIDEO_EXTS = /\.(mp4|webm|mov)$/i;
+const isVideoBlob = (pathname: string) => VIDEO_EXTS.test(pathname);
+
+export function MediaPickerModal({
   onSelect,
   onClose,
 }: {
@@ -144,7 +147,7 @@ function MediaPickerModal({
             <input
               ref={fileRef}
               type="file"
-              accept="image/*"
+              accept="image/*,video/mp4,video/webm,video/quicktime"
               className="hidden"
               onChange={handleUpload}
             />
@@ -192,13 +195,22 @@ function MediaPickerModal({
                   className="group relative rounded-lg overflow-hidden border border-gray-200 cursor-pointer hover:border-blue-400 transition-colors aspect-square bg-gray-50"
                   onClick={() => onSelect(blob.url)}
                 >
-                  <Image
-                    src={blob.url}
-                    alt={blob.pathname}
-                    fill
-                    className="object-cover"
-                    sizes="150px"
-                  />
+                  {isVideoBlob(blob.pathname) ? (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-900 gap-1">
+                      <span className="text-3xl">🎬</span>
+                      <p className="text-white text-xs px-2 truncate w-full text-center">
+                        {blob.pathname.split('/').pop()}
+                      </p>
+                    </div>
+                  ) : (
+                    <Image
+                      src={blob.url}
+                      alt={blob.pathname}
+                      fill
+                      className="object-cover"
+                      sizes="150px"
+                    />
+                  )}
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
                   <button
                     type="button"

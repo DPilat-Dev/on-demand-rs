@@ -10,6 +10,9 @@ interface BlobItem {
   uploadedAt: string;
 }
 
+const VIDEO_EXTS = /\.(mp4|webm|mov)$/i;
+const isVideo = (pathname: string) => VIDEO_EXTS.test(pathname);
+
 function formatBytes(bytes: number) {
   if (bytes < 1024) return `${bytes} B`;
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
@@ -66,7 +69,7 @@ export default function MediaLibraryPage() {
   }
 
   async function handleDelete(url: string) {
-    if (!confirm('Delete this image? This cannot be undone.')) return;
+    if (!confirm('Delete this file? This cannot be undone.')) return;
     await fetch('/api/admin/media', {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
@@ -89,14 +92,14 @@ export default function MediaLibraryPage() {
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Media Library</h1>
           <p className="text-sm text-gray-500 mt-1">
-            {blobs.length} {blobs.length === 1 ? 'image' : 'images'} · {formatBytes(totalSize)} used
+            {blobs.length} {blobs.length === 1 ? 'file' : 'files'} · {formatBytes(totalSize)} used
           </p>
         </div>
         <div>
           <input
             ref={fileRef}
             type="file"
-            accept="image/*"
+            accept="image/*,video/mp4,video/webm,video/quicktime"
             multiple
             className="hidden"
             onChange={handleUpload}
@@ -106,7 +109,7 @@ export default function MediaLibraryPage() {
             disabled={uploading}
             className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 disabled:opacity-50 transition-colors"
           >
-            {uploading ? 'Uploading…' : '+ Upload Images'}
+            {uploading ? 'Uploading…' : '+ Upload'}
           </button>
         </div>
       </div>
@@ -122,13 +125,13 @@ export default function MediaLibraryPage() {
         className="border-2 border-dashed border-gray-200 rounded-xl p-8 text-center cursor-pointer hover:border-blue-300 transition-colors"
         onClick={() => fileRef.current?.click()}
       >
-        <p className="text-gray-400 text-sm">Click to upload · JPEG, PNG, WebP, GIF, SVG</p>
+        <p className="text-gray-400 text-sm">Click to upload · JPEG, PNG, WebP, GIF, SVG · MP4, WebM, MOV</p>
       </div>
 
       {loading ? (
         <p className="text-sm text-gray-500 text-center py-12">Loading…</p>
       ) : blobs.length === 0 ? (
-        <p className="text-sm text-gray-400 text-center py-8">No images yet. Upload one above.</p>
+        <p className="text-sm text-gray-400 text-center py-8">No files yet. Upload one above.</p>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
           {blobs.map((blob) => (
@@ -138,13 +141,22 @@ export default function MediaLibraryPage() {
             >
               {/* Thumbnail */}
               <div className="relative aspect-square bg-gray-50">
-                <Image
-                  src={blob.url}
-                  alt={blob.pathname}
-                  fill
-                  className="object-cover"
-                  sizes="200px"
-                />
+                {isVideo(blob.pathname) ? (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 bg-gray-900">
+                    <span className="text-4xl">🎬</span>
+                    <p className="text-white text-xs px-2 truncate w-full text-center">
+                      {blob.pathname.split('/').pop()}
+                    </p>
+                  </div>
+                ) : (
+                  <Image
+                    src={blob.url}
+                    alt={blob.pathname}
+                    fill
+                    className="object-cover"
+                    sizes="200px"
+                  />
+                )}
               </div>
 
               {/* Info bar */}

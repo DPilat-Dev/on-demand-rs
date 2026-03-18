@@ -4,6 +4,7 @@ import { getPageContent } from '@/lib/content';
 import { savePageContent } from '../../actions';
 import { Field, TextareaField, SectionCard } from '../../components/FormField';
 import { ImageField } from '../../components/ImageField';
+import { VideoListField } from '../../components/VideoListField';
 import { SubmitButton } from '../../components/SubmitButton';
 
 interface PageProps {
@@ -100,6 +101,10 @@ function HomepageForm({ data, save }: { data: any; save: (fd: FormData) => Promi
         </div>
         <ImageField label="Background Image" name="heroBackgroundImage" defaultValue={data.hero?.backgroundImage ?? ''} hint="Upload via Media Library or paste a URL" />
         <Field label="Background Image Alt Text" name="heroBackgroundImageAlt" defaultValue={data.hero?.backgroundImageAlt ?? ''} />
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Hero Videos</label>
+          <VideoListField name="heroVideos" defaultValue={data.hero?.heroVideos ?? []} hint="One video is randomly selected each page load. Clear all to use the background image instead." />
+        </div>
         <Field label="Button Text" name="heroButtonText" defaultValue={data.hero?.form?.buttonText ?? ''} />
         <ImageField label="Certification Logo" name="heroCertificationImage" defaultValue={data.hero?.certification?.image ?? ''} hint="e.g. /content/cfesa-logo.png" />
         <Field label="Certification Alt Text" name="heroCertificationAlt" defaultValue={data.hero?.certification?.alt ?? ''} />

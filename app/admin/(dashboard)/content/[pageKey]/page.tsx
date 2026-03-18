@@ -456,6 +456,11 @@ function ServicesListingForm({ data, save }: { data: any; save: (fd: FormData) =
         <Field label="Overlay Subtitle" name="heroOverlaySubtitle" defaultValue={data.hero?.overlaySubtitle ?? ''} />
       </SectionCard>
 
+      <SectionCard title="Our Expertise Section">
+        <Field label="Title" name="expertiseTitle" defaultValue={data.expertise?.title ?? ''} />
+        <Field label="Subtitle" name="expertiseSubtitle" defaultValue={data.expertise?.subtitle ?? ''} />
+      </SectionCard>
+
       <SectionCard title="Emergency CTA Section">
         <Field label="Title" name="emergencyTitle" defaultValue={data.emergencyCTA?.title ?? ''} />
         <TextareaField label="Description" name="emergencyDescription" defaultValue={data.emergencyCTA?.description ?? ''} rows={3} />

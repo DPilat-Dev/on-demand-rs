@@ -3,35 +3,15 @@ import { CheckCircle } from 'lucide-react';
 import Image from 'next/image';
 import DynamicIcon from '@/app/components/DynamicIcon';
 import { getPageContent, getAllServices } from '@/lib/content';
-import type { HomePageData } from '@/data/homepage';
 import type { ServicesListingData } from '@/data/services-listing';
 
 export default async function ServicesPage() {
-  const [homepageData, listingData, allServices] = await Promise.all([
-    getPageContent('homepage') as Promise<HomePageData>,
+  const [listingData, allServices] = await Promise.all([
     getPageContent('services-listing') as Promise<ServicesListingData>,
     getAllServices(),
   ]);
 
-  const { services } = homepageData;
-  const { hero, emergencyCTA } = listingData;
-
-  const serviceImageMap: Record<string, string> = Object.fromEntries(
-    allServices.map((s) => [s.slug, s.heroImage ?? ''])
-  );
-
-  const getIcon = (iconName: string) => {
-    const service = services.serviceCards.find((card) => card.icon === iconName);
-    const iconColor = service?.iconColor;
-    const icons: Record<string, React.ReactNode> = {
-      refrigeration: <DynamicIcon iconName="FaSnowflake" size={24} color={iconColor} />,
-      'food-service': <DynamicIcon iconName="FaUtensils" size={24} color={iconColor} />,
-      hvac: <DynamicIcon iconName="FaThermometerHalf" size={24} color={iconColor} />,
-      'ice-machine': <DynamicIcon iconName="FaCube" size={24} color={iconColor} />,
-      maintenance: <DynamicIcon iconName="FaWrench" size={24} color={iconColor} />,
-    };
-    return icons[iconName] || <DynamicIcon iconName="FaWrench" size={24} color={iconColor} />;
-  };
+  const { hero, expertise, emergencyCTA } = listingData;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -84,64 +64,62 @@ export default async function ServicesPage() {
         </div>
       </section>
 
-      {/* Services Grid */}
+      {/* Our Expertise / Services Grid */}
       <section className="py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{services.title}</h2>
-            <p className="text-lg text-gray-600">{services.subtitle}</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{expertise?.title ?? 'Our Expertise'}</h2>
+            <p className="text-lg text-gray-600">{expertise?.subtitle ?? ''}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.serviceCards.map((service, index) => {
-              const slug = service.link.replace('/services/', '');
-              const serviceImage = serviceImageMap[slug];
-              return (
-                <div
-                  key={index}
-                  className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all hover:-translate-y-1 flex flex-col"
-                >
-                  {serviceImage && (
-                    <div className="relative h-48 w-full overflow-hidden">
-                      <Image
-                        src={serviceImage}
-                        alt={service.title}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                      <div className="absolute top-4 left-4">
-                        <div className="h-12 w-12 rounded-lg bg-white/90 backdrop-blur-sm flex items-center justify-center">
-                          {getIcon(service.icon)}
-                        </div>
+            {allServices.map((service, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all hover:-translate-y-1 flex flex-col"
+              >
+                {service.heroImage && (
+                  <div className="relative h-48 w-full overflow-hidden">
+                    <Image
+                      src={service.heroImage}
+                      alt={service.name}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                    <div className="absolute top-4 left-4">
+                      <div className="h-12 w-12 rounded-lg bg-white/90 backdrop-blur-sm flex items-center justify-center text-xl">
+                        {service.icon}
                       </div>
                     </div>
-                  )}
-                  <div className="p-6 flex-1 flex flex-col">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">{service.title}</h3>
-                    <p className="text-gray-600 mb-4">{service.description}</p>
+                  </div>
+                )}
+                <div className="p-6 flex-1 flex flex-col">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">{service.name}</h3>
+                  <p className="text-gray-600 mb-4">{service.listingDescription ?? service.description}</p>
+                  {(service.listingFeatures ?? []).length > 0 && (
                     <ul className="space-y-2 mb-6 flex-1">
-                      {service.features.map((feature, idx) => (
+                      {(service.listingFeatures ?? []).map((feature: string, idx: number) => (
                         <li key={idx} className="flex items-start">
                           <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
                           <span className="text-gray-700">{feature}</span>
                         </li>
                       ))}
                     </ul>
-                    <Link
-                      href={service.link}
-                      className="inline-flex items-center justify-center w-full rounded-lg bg-blue-600 px-4 py-3 text-sm font-semibold text-white hover:bg-blue-700 transition-colors mt-auto"
-                    >
-                      View Service Details
-                      <svg className="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </Link>
-                  </div>
+                  )}
+                  <Link
+                    href={`/services/${service.slug}`}
+                    className="inline-flex items-center justify-center w-full rounded-lg bg-blue-600 px-4 py-3 text-sm font-semibold text-white hover:bg-blue-700 transition-colors mt-auto"
+                  >
+                    View Service Details
+                    <svg className="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </Link>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
         </div>
       </section>

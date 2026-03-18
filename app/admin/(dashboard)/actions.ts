@@ -25,6 +25,7 @@ export async function toggleServiceEnabled(id: string, slug: string, isEnabled: 
 export async function saveService(slug: string, formData: FormData) {
   const name = formData.get('name') as string;
   const description = formData.get('description') as string;
+  const listingDescription = formData.get('listingDescription') as string;
   const icon = formData.get('icon') as string;
   const heroImage = formData.get('heroImage') as string;
   const ctaTitle = formData.get('ctaTitle') as string;
@@ -46,17 +47,21 @@ export async function saveService(slug: string, formData: FormData) {
   let brands = [];
   let faqs = [];
   let commonIssues = [];
+  let listingFeatures: string[] = [];
 
   try { serviceTypes = JSON.parse(formData.get('serviceTypes') as string || '[]'); } catch {}
   try { equipment = JSON.parse(formData.get('equipment') as string || '[]'); } catch {}
   try { brands = JSON.parse(formData.get('brands') as string || '[]'); } catch {}
   try { faqs = JSON.parse(formData.get('faqs') as string || '[]'); } catch {}
   try { commonIssues = JSON.parse(formData.get('commonIssues') as string || '[]'); } catch {}
+  try { listingFeatures = JSON.parse(formData.get('listingFeatures') as string || '[]'); } catch {}
 
   const contentJson = {
     slug,
     name,
     description,
+    listingDescription: listingDescription || undefined,
+    listingFeatures: listingFeatures.length > 0 ? listingFeatures : undefined,
     icon,
     heroImage,
     serviceTypes,
@@ -325,6 +330,10 @@ function buildServicesListingContent(fd: FormData) {
       heroImageAlt: fd.get('heroImageAlt'),
       overlayTitle: fd.get('heroOverlayTitle'),
       overlaySubtitle: fd.get('heroOverlaySubtitle'),
+    },
+    expertise: {
+      title: fd.get('expertiseTitle'),
+      subtitle: fd.get('expertiseSubtitle'),
     },
     emergencyCTA: {
       title: fd.get('emergencyTitle'),

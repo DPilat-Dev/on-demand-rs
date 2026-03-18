@@ -8,6 +8,10 @@ export interface ServicesListingData {
     overlayTitle: string;
     overlaySubtitle: string;
   };
+  expertise: {
+    title: string;
+    subtitle: string;
+  };
   emergencyCTA: {
     title: string;
     description: string;
@@ -26,6 +30,10 @@ export const servicesListingData: ServicesListingData = {
     heroImageAlt: 'Licensed technicians providing professional service',
     overlayTitle: 'Certified & Licensed Technicians',
     overlaySubtitle: '45+ Years Combined Experience • 24/7 Emergency Support',
+  },
+  expertise: {
+    title: 'Our Expertise',
+    subtitle: 'We specialize in keeping your commercial kitchen running at peak performance.',
   },
   emergencyCTA: {
     title: 'Need Emergency Service Right Now?',

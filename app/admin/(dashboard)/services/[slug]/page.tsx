@@ -53,8 +53,22 @@ export default async function ServiceEditorPage({ params }: PageProps) {
             <Field label="Service Name" name="name" defaultValue={svc.name} required />
             <Field label="Icon (emoji)" name="icon" defaultValue={svc.icon} hint="e.g. ❄️ or 🔧" />
           </div>
-          <TextareaField label="Description" name="description" defaultValue={svc.description} rows={3} />
+          <TextareaField label="Description" name="description" defaultValue={svc.description} rows={3} hint="Used on the individual service page." />
           <ImageField label="Hero Image" name="heroImage" defaultValue={svc.heroImage ?? ''} hint="Upload via Media Library or paste a URL" />
+        </SectionCard>
+
+        {/* Services Listing Card */}
+        <SectionCard title="Services Listing Card">
+          <p className="text-xs text-gray-500 mb-3">Controls how this service appears on the <strong>/services</strong> listing page.</p>
+          <TextareaField label="Listing Description" name="listingDescription" defaultValue={svc.listingDescription ?? ''} rows={2} hint="Short snippet shown on the /services page. Leave blank to use the main description." />
+          <TextareaField
+            label="Listing Features"
+            name="listingFeatures"
+            defaultValue={JSON.stringify(svc.listingFeatures ?? [], null, 2)}
+            rows={6}
+            mono
+            hint={'JSON array of bullet points, e.g. ["24/7 Emergency Service", "All Major Brands"]'}
+          />
         </SectionCard>
 
         {/* Call to Action */}

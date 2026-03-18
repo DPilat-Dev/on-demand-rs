@@ -20,6 +20,10 @@ export interface ServiceData {
   slug: string;
   name: string;
   description: string;
+  /** Short description shown on the /services listing card. Falls back to description. */
+  listingDescription?: string;
+  /** Bullet-point features shown on the /services listing card. */
+  listingFeatures?: string[];
   icon: string;
   heroImage: string;
   serviceTypes: ServiceFeature[];

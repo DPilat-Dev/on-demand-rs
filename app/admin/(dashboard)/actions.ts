@@ -48,6 +48,8 @@ export async function saveService(slug: string, formData: FormData) {
   let faqs = [];
   let commonIssues = [];
   let listingFeatures: string[] = [];
+  let miniCtas: any[] = [];
+  let sectionOrder: string[] = [];
 
   try { serviceTypes = JSON.parse(formData.get('serviceTypes') as string || '[]'); } catch {}
   try { equipment = JSON.parse(formData.get('equipment') as string || '[]'); } catch {}
@@ -55,6 +57,8 @@ export async function saveService(slug: string, formData: FormData) {
   try { faqs = JSON.parse(formData.get('faqs') as string || '[]'); } catch {}
   try { commonIssues = JSON.parse(formData.get('commonIssues') as string || '[]'); } catch {}
   try { listingFeatures = JSON.parse(formData.get('listingFeatures') as string || '[]'); } catch {}
+  try { miniCtas = JSON.parse(formData.get('miniCtas') as string || '[]'); } catch {}
+  try { sectionOrder = JSON.parse(formData.get('sectionOrder') as string || '[]'); } catch {}
 
   const contentJson = {
     slug,
@@ -69,6 +73,8 @@ export async function saveService(slug: string, formData: FormData) {
     brands,
     faqs,
     commonIssues,
+    miniCtas: miniCtas.length > 0 ? miniCtas : undefined,
+    sectionOrder: sectionOrder.length > 0 ? sectionOrder : undefined,
     cta: { title: ctaTitle, description: ctaDescription, buttonText: ctaButtonText, phone: ctaPhone },
     sections: {
       serviceTypes: sectionsServiceTypes,

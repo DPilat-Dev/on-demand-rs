@@ -3,9 +3,10 @@ import { prisma } from '@/lib/prisma';
 import { getServiceData } from '@/lib/content';
 import Link from 'next/link';
 import { saveService } from '../../actions';
-import { Field, TextareaField, CheckboxField, SectionCard } from '../../components/FormField';
+import { Field, TextareaField, SectionCard } from '../../components/FormField';
 import { ImageField } from '../../components/ImageField';
 import { SubmitButton } from '../../components/SubmitButton';
+import SectionOrderEditor from './SectionOrderEditor';
 import type { ServiceData } from '@/types/service';
 
 interface PageProps {
@@ -81,90 +82,19 @@ export default async function ServiceEditorPage({ params }: PageProps) {
           <Field label="Button Text" name="ctaButtonText" defaultValue={svc.cta?.buttonText ?? 'Call Now'} />
         </SectionCard>
 
-        {/* Section Visibility */}
-        <SectionCard title="Section Visibility">
-          <p className="text-xs text-gray-500 mb-3">Control which sections appear on this service page.</p>
-          <div className="space-y-3">
-            <CheckboxField label="Show Service Types Section" name="sectionsServiceTypes" defaultChecked={svc.sections?.serviceTypes !== false} />
-            <CheckboxField label="Show Equipment Section" name="sectionsEquipment" defaultChecked={svc.sections?.equipment !== false} />
-            <CheckboxField label="Show Brands Section" name="sectionsBrands" defaultChecked={svc.sections?.brands !== false} />
-            <CheckboxField label="Show Common Issues Section" name="sectionsCommonIssues" defaultChecked={svc.sections?.commonIssues !== false} />
-            <CheckboxField label="Show FAQs Section" name="sectionsFaqs" defaultChecked={svc.sections?.faqs !== false} />
-          </div>
-        </SectionCard>
-
-        {/* Service Types */}
-        <SectionCard title="Service Types">
-          <p className="text-xs text-gray-500 mb-2">
-            JSON array of{' '}
-            <code className="bg-gray-100 px-1 rounded">{'{ name, description, features: string[] }'}</code>
-          </p>
-          <TextareaField
-            label=""
-            name="serviceTypes"
-            defaultValue={JSON.stringify(svc.serviceTypes ?? [], null, 2)}
-            rows={10}
-            mono
-          />
-        </SectionCard>
-
-        {/* Equipment */}
-        <SectionCard title="Equipment We Service">
-          <p className="text-xs text-gray-500 mb-2">
-            JSON array of{' '}
-            <code className="bg-gray-100 px-1 rounded">{'{ name, description, icon }'}</code>
-          </p>
-          <TextareaField
-            label=""
-            name="equipment"
-            defaultValue={JSON.stringify(svc.equipment ?? [], null, 2)}
-            rows={10}
-            mono
-          />
-        </SectionCard>
-
-        {/* Brands */}
-        <SectionCard title="Brands">
-          <p className="text-xs text-gray-500 mb-2">
-            JSON array of{' '}
-            <code className="bg-gray-100 px-1 rounded">{'{ name, logo? }'}</code>
-          </p>
-          <TextareaField
-            label=""
-            name="brands"
-            defaultValue={JSON.stringify(svc.brands ?? [], null, 2)}
-            rows={8}
-            mono
-          />
-        </SectionCard>
-
-        {/* FAQs */}
-        <SectionCard title="FAQs">
-          <p className="text-xs text-gray-500 mb-2">
-            JSON array of{' '}
-            <code className="bg-gray-100 px-1 rounded">{'{ question, answer }'}</code>
-          </p>
-          <TextareaField
-            label=""
-            name="faqs"
-            defaultValue={JSON.stringify(svc.faqs ?? [], null, 2)}
-            rows={10}
-            mono
-          />
-        </SectionCard>
-
-        {/* Common Issues */}
-        <SectionCard title="Common Issues">
-          <p className="text-xs text-gray-500 mb-2">
-            JSON array of{' '}
-            <code className="bg-gray-100 px-1 rounded">{'{ problem, solution, prevention? }'}</code>
-          </p>
-          <TextareaField
-            label=""
-            name="commonIssues"
-            defaultValue={JSON.stringify(svc.commonIssues ?? [], null, 2)}
-            rows={10}
-            mono
+        {/* Sections — visibility, order, content editors, mini CTAs */}
+        <SectionCard title="Sections">
+          <SectionOrderEditor
+            initialOrder={svc.sectionOrder}
+            initialMiniCtas={svc.miniCtas}
+            initialSections={svc.sections}
+            initialContent={{
+              serviceTypes: svc.serviceTypes ?? [],
+              equipment:    svc.equipment    ?? [],
+              commonIssues: svc.commonIssues ?? [],
+              brands:       svc.brands       ?? [],
+              faqs:         svc.faqs         ?? [],
+            }}
           />
         </SectionCard>
 

@@ -16,6 +16,17 @@ export interface FAQItem {
   answer: string;
 }
 
+export interface MiniCtaBlock {
+  id: string;
+  title: string;
+  description?: string;
+  buttonText: string;
+  /** Link for the button. Defaults to /contact if omitted. */
+  buttonHref?: string;
+  phone?: string;
+  style?: 'default' | 'emergency' | 'subtle';
+}
+
 export interface ServiceData {
   slug: string;
   name: string;
@@ -70,6 +81,18 @@ export interface ServiceData {
     name: string;
     logo?: string;
   }>;
+  /**
+   * Mini call-to-action blocks that can be inserted between sections.
+   * Referenced in `sectionOrder` as `"miniCta:<id>"`.
+   */
+  miniCtas?: MiniCtaBlock[];
+  /**
+   * Ordered list of section keys to render on the service page.
+   * Core keys: serviceTypes | equipment | commonIssues | brands | faqs
+   * Mini CTAs: miniCta:<id>
+   * Defaults to the fixed order if absent.
+   */
+  sectionOrder?: string[];
   sections?: {
     serviceTypes?: boolean;
     equipment?: boolean;

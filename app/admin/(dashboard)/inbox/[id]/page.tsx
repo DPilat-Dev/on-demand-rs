@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
-import { markAsRead, archiveSubmission, unarchiveSubmission, deleteSubmission } from '../actions';
+import { archiveSubmission, unarchiveSubmission, deleteSubmission } from '../actions';
 import { redirect } from 'next/navigation';
 
 interface PageProps {
@@ -14,9 +14,9 @@ export default async function SubmissionDetailPage({ params }: PageProps) {
   const sub = await prisma.contactSubmission.findUnique({ where: { id } });
   if (!sub) notFound();
 
-  // Auto-mark as read when viewed
+  // Auto-mark as read when viewed (direct update — revalidatePath can't be called during render)
   if (!sub.isRead) {
-    await markAsRead(id);
+    await prisma.contactSubmission.update({ where: { id }, data: { isRead: true } });
   }
 
   const deleteAndRedirect = async () => {

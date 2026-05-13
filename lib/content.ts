@@ -106,6 +106,24 @@ export async function getServiceData(slug: string): Promise<ServiceData | null> 
   return staticMap[slug] ?? null;
 }
 
+// Admin variant — does not filter by isEnabled so disabled services are still editable.
+// Returns both the content and the raw DB row to avoid a second query in the editor page.
+export async function getServiceDataForAdmin(
+  slug: string,
+): Promise<{ svc: ServiceData; dbRow: Awaited<ReturnType<typeof prisma.servicePage.findUnique>> } | null> {
+  let dbRow: Awaited<ReturnType<typeof prisma.servicePage.findUnique>> = null;
+  try {
+    dbRow = await prisma.servicePage.findUnique({ where: { slug } });
+    if (dbRow?.contentJson) return { svc: dbRow.contentJson as ServiceData, dbRow };
+  } catch {
+    // DB unreachable — fall through to static data
+  }
+
+  const staticMap = await getStaticServiceMap();
+  const svc = staticMap[slug];
+  return svc ? { svc, dbRow } : null;
+}
+
 export async function getAllServices(): Promise<ServiceData[]> {
   try {
     const rows = await prisma.servicePage.findMany({

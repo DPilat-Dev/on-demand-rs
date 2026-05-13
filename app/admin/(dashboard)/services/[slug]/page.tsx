@@ -1,13 +1,11 @@
 import { notFound } from 'next/navigation';
-import { prisma } from '@/lib/prisma';
-import { getServiceData } from '@/lib/content';
+import { getServiceDataForAdmin } from '@/lib/content';
 import Link from 'next/link';
 import { saveService } from '../../actions';
 import { Field, TextareaField, SectionCard } from '../../components/FormField';
 import { ImageField } from '../../components/ImageField';
 import { SubmitButton } from '../../components/SubmitButton';
 import SectionOrderEditor from './SectionOrderEditor';
-import type { ServiceData } from '@/types/service';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -15,11 +13,11 @@ interface PageProps {
 
 export default async function ServiceEditorPage({ params }: PageProps) {
   const { slug } = await params;
-  const svc = await getServiceData(slug) as ServiceData | null;
+  const result = await getServiceDataForAdmin(slug);
 
-  if (!svc) notFound();
+  if (!result) notFound();
 
-  const dbRow = await prisma.servicePage.findUnique({ where: { slug } });
+  const { svc, dbRow } = result;
 
   const saveWithSlug = saveService.bind(null, slug);
 

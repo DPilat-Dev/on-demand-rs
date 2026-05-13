@@ -1,13 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Phone, Mail, MapPin, Clock, Send, CheckCircle } from 'lucide-react';
 import Image from 'next/image';
 
-export default function ContactPage() {
+function ContactPageInner() {
+  const searchParams = useSearchParams();
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
+    email: searchParams.get('email') ?? '',
     phone: '',
     serviceType: '',
     message: '',
@@ -369,5 +371,13 @@ export default function ContactPage() {
         </div>
       </section>
     </div>
+  );
+}
+
+export default function ContactPage() {
+  return (
+    <Suspense>
+      <ContactPageInner />
+    </Suspense>
   );
 }

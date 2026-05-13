@@ -1,5 +1,6 @@
 import { Phone, Mail, MapPin } from 'lucide-react';
 import DynamicIcon from './DynamicIcon';
+import ContactCTAForm from './ContactCTAForm';
 import type { HomePageData } from '@/data/homepage';
 
 export default function ContactCTA({ contact, emergencyCTA }: { contact: HomePageData['contact']; emergencyCTA: HomePageData['emergencyCTA'] }) {
@@ -75,77 +76,7 @@ export default function ContactCTA({ contact, emergencyCTA }: { contact: HomePag
           </div>
 
           {/* Contact Form */}
-          <div className="bg-gray-50 rounded-xl p-8">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">
-              {contact.form.title}
-            </h3>
-            <form className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {contact.form.fields.name}
-                </label>
-                <input
-                  type="text"
-                  className="w-full rounded-lg text-gray-700 border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  required
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {contact.form.fields.email}
-                  </label>
-                  <input
-                    type="email"
-                    className="w-full rounded-lg text-gray-700 border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {contact.form.fields.phone}
-                  </label>
-                  <input
-                    type="tel"
-                    className="w-full rounded-lg text-gray-700 border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {contact.form.fields.serviceType}
-                </label>
-                <select className="w-full rounded-lg text-gray-700 border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                  {contact.form.serviceOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {contact.form.fields.message}
-                </label>
-                <textarea
-                  rows={4}
-                  className="w-full rounded-lg text-gray-700 border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  required
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full rounded-lg bg-blue-600 px-6 py-3 text-white font-semibold hover:bg-blue-700 transition-colors"
-              >
-                {contact.form.fields.submitButton}
-              </button>
-            </form>
-          </div>
+          <ContactCTAForm form={contact.form} />
         </div>
       </div>
     </section>
